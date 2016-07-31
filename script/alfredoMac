@@ -32,7 +32,7 @@ function app_restart {
     ${DOCKER_COMPOSE} up                                   # Starts the app.
 }
 function app_db {
-    ${DOCKER_COMPOSE} run db mongod
+    ${DOCKER_COMPOSE} run db mongo
 }
 function app_run {
     if [[ -f ./tmp/pid/server.pid ]]
