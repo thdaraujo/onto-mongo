@@ -1,0 +1,88 @@
+#! /bin/bash
+#
+# Builds the Docker image using Docker-Compose
+# Starts and Restarts the app;
+# (requires docker, docker-compose and privileges)
+#
+
+DOCKER='docker'
+DOCKER_COMPOSE='docker-compose'
+
+function usage {
+    echo "usage: ./scripts/init.sh [OPTIONS]:"
+    echo " "
+    echo " build:      Builds everything, images and containers."
+    echo " run:        Runs the app on the latest container."
+    echo " db:         Enters the database Container."
+    echo " clean:      Stops and Removes all containers."
+    echo " purge:      Stops and Removes all containers and images."
+    echo " restart:    Stops all containers and then 'run'."
+    echo " help:       Prints this message."
+    echo " open:       Opens web site (default container ip + port 5000)."
+    echo " "
+}
+function check_deps {
+    # Check dependencies.
+    command -v ${DOCKER}>/dev/null 2>&1 || { echo >&2 "I require '${DOCKER}', but it's not installed.  Aborting."; exit 1; }
+    command -v ${DOCKER_COMPOSE}>/dev/null 2>&1 || { echo >&2 "I require '${DOCKER_COMPOSE}', but it's not installed.  Aborting."; exit 1; }
+    return 0
+}
+function app_restart {
+    ${DOCKER} stop $(${DOCKER} ps -a -q)              # Stops old containers.
+    ${DOCKER_COMPOSE} up                                   # Starts the app.
+}
+function app_db {
+    ${DOCKER_COMPOSE} run db mongod
+}
+function app_run {
+    if [[ -f ./tmp/pid/server.pid ]]
+    then
+        rm ./tmp/pid/server.pid
+    fi
+    app_open
+    ${DOCKER_COMPOSE} up                                   # Starts the app.
+}
+function build_clean {
+    CONTAINERS=$(${DOCKER} ps -a -q)
+    if [[ -n $CONTAINERS ]]
+    then
+        ${DOCKER} stop $CONTAINERS # Stops old containers.
+        ${DOCKER} rm $CONTAINERS   # Remove old containers.
+    fi
+    if [[ -f ./tmp/pid/server.pid ]]
+    then
+        rm ./tmp/pid/server.pid
+    fi
+}
+function build_purge {
+    build_clean
+    PROJECT_DIR=${PWD##*/}                         # Gets current dir name.
+    ${DOCKER} rmi ${PROJECT_DIR}_web:latest   # Removes old project image.
+}
+function build {
+    build_purge
+    ${DOCKER_COMPOSE} build                   # Builds a new image.
+}
+function start_docker_machine {
+    docker-machine start default
+    eval "$(docker-machine env default)"
+}
+function app_open {
+  IP=$(docker-machine ip default)
+  echo "url -> http://$IP:5000"
+  open "http://$(docker-machine ip default):5000"
+}
+
+if check_deps; then
+    if [[ $1 == build ]]; then build;
+    elif [[ $1 == purge ]]; then build_purge;
+    elif [[ $1 == clean ]]; then build_clean;
+    elif [[ $1 == restart ]]; then app_restart;
+    elif [[ $1 == run ]]; then app_run;
+    elif [[ $1 == db ]]; then app_db;
+    elif [[ $1 == help ]]; then usage;
+    elif [[ $1 == machine ]]; then start_docker_machine;
+    elif [[ $1 == open ]]; then app_open;
+    else { echo ""; echo "Error: no valid argument."; echo ""; usage; echo "Exiting..."; exit 0; }
+    fi
+fi
