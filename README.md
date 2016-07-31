@@ -26,3 +26,5 @@ For more information, run the help option:
 ```
 
 The app runs at ```localhost:5000``` or ```$(docker-machine ip default):5000```.
+
+Connecting to the shell: `docker exec -it <id> bash`
