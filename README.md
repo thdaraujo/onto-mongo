@@ -25,4 +25,4 @@ For more information, run the help option:
 ./script/alfredoMac help
 ```
 
-The app runs at ```localhost:5000```.
+The app runs at ```localhost:5000``` or ```$(docker-machine ip default):5000```.
