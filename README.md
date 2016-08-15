@@ -6,6 +6,12 @@ Ontology for mongoDB
 
 The ```alfredo``` script provides the following functionalities:
 
+
+First: give execute permission:
+```
+chmod u+x script/alfredoMac
+```
+
 ```
 # Builds the image from scratch
 ./script/alfredoMac build
