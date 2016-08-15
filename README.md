@@ -13,6 +13,12 @@ chmod u+x script/alfredoMac
 ```
 
 ```
+# Start docker machine
+./script/alfredoMac machine
+
+# Sets env
+./script/alfredoMac env
+
 # Builds the image from scratch
 ./script/alfredoMac build
 
