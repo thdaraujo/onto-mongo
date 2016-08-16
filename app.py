@@ -19,6 +19,8 @@ def lattes():
     _items = db.lattes.find()
     items = [item for item in _items]
 
+    #print(items[0], file=sys.stderr)
+
     return render_template('lattes.html', items=items)
 
 
