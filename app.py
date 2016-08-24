@@ -40,7 +40,6 @@ def new():
 def load():
     file_path = request.form['path']
     print(file_path, file=sys.stderr)
-    print('Hello world!', file=sys.stderr)
 
     with open(file_path) as file:
         data = file.read()
