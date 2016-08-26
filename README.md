@@ -1,42 +1,24 @@
-# onto-mongo
-Ontology for mongoDB
+# README
 
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-## The alfredo script
+Things you may want to cover:
 
-The ```alfredo``` script provides the following functionalities:
+* Ruby version
 
+* System dependencies
 
-First: give execute permission:
-```
-chmod u+x script/alfredoMac
-```
+* Configuration
 
-```
-# Start docker machine
-./script/alfredoMac machine
+* Database creation
 
-# Sets env
-./script/alfredoMac env
+* Database initialization
 
-# Builds the image from scratch
-./script/alfredoMac build
+* How to run the test suite
 
-# Stops and removes all containers.
-./script/alfredoMac clean
+* Services (job queues, cache servers, search engines, etc.)
 
-# Restarts the app container if its running, starts it otherwise.
-./script/alfredoMac restart
+* Deployment instructions
 
-# Starts the app container.
-./script/alfredoMac run
-
-```
-For more information, run the help option:
-```
-./script/alfredoMac help
-```
-
-The app runs at ```localhost:5000``` or ```$(docker-machine ip default):5000```.
-
-Connecting to the shell: `docker exec -it <id> bash`
+* ...

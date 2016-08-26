@@ -20,7 +20,7 @@ function usage {
     echo " purge:      Stops and Removes all containers and images."
     echo " restart:    Stops all containers and then 'run'."
     echo " help:       Prints this message."
-    echo " open:       Opens web site (default container ip + port 5000)."
+    echo " open:       Opens web site (default container ip + port 3000)."
     echo " "
 }
 function check_deps {
@@ -74,8 +74,8 @@ function docker_machine_env {
 }
 function app_open {
   IP=$(docker-machine ip default)
-  echo "url -> http://$IP:5000"
-  open "http://$(docker-machine ip default):5000"
+  echo "url -> http://$IP:3000"
+  open "http://$(docker-machine ip default):3000"
 }
 
 if check_deps; then
