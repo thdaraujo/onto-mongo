@@ -14,9 +14,12 @@ hashes = files.map{|file|
                   }
 
 # save files adding dynamic fields
+puts '------------------------------------------'
 hashes.each do |hash|
   cv = CV.new(hash)
   cv.save!
+  puts cv.CURRICULO_VITAE["DADOS_GERAIS"]["NOME_COMPLETO"]
 end
 
+puts '------------------------------------------'
 puts "#{CV.all.size} files added to mongo!"
