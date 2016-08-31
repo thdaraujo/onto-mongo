@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+files = Dir.glob('cvs/amostra/*.xml')
+hashes = files.map{|file|
+                    xml = File.read(file)
+                    Hash.from_xml(xml)
+                  }
+
+# save files adding dynamic fields
+hashes.each do |hash|
+  cv = CV.new(hash)
+  cv.save!
+end
+
+puts "#{CV.all.size} files added to mongo!"

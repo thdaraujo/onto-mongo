@@ -1,4 +1,13 @@
+defaults: &defaults
+  allow_dynamic_fields: true
+  #parameterize_keys: true
+  #persist_in_safe_mode: true
+  #raise_not_found_error: true
+  #reconnect_time: 3
+  #use_object_ids: false
+
 development:
+  <<: *defaults
   # Configure available database clients. (required)
   clients:
     # Defines the default client. (required)
@@ -132,6 +141,7 @@ development:
     # otherwise.(default: :info)
     # log_level: :info
 test:
+  <<: *defaults
   clients:
     default:
       database: onto-mongo_test
@@ -143,6 +153,7 @@ test:
         max_pool_size: 1
 
 production:
+  <<: *defaults
   clients:
     default:
       database: onto-mongo_production
