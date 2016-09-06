@@ -15,7 +15,7 @@ function usage {
     echo " env:        Sets env variables."
     echo " build:      Builds everything, images and containers."
     echo " run:        Runs the app on the latest container."
-    echo " db:         Enters the database Container."
+    echo " mongo:      Connects to the mongoDB container instance."
     echo " clean:      Stops and Removes all containers."
     echo " purge:      Stops and Removes all containers and images."
     echo " restart:    Stops all containers and then 'run'."
@@ -33,7 +33,7 @@ function app_restart {
     ${DOCKER} stop $(${DOCKER} ps -a -q)              # Stops old containers.
     ${DOCKER_COMPOSE} up                                   # Starts the app.
 }
-function app_db {
+function app_mongo {
     IP=$(docker-machine ip default)
     mongo --port 27017 --host "$IP"
 }
@@ -84,7 +84,7 @@ if check_deps; then
     elif [[ $1 == clean ]]; then build_clean;
     elif [[ $1 == restart ]]; then app_restart;
     elif [[ $1 == run ]]; then app_run;
-    elif [[ $1 == db ]]; then app_db;
+    elif [[ $1 == mongo ]]; then app_mongo;
     elif [[ $1 == help ]]; then usage;
     elif [[ $1 == machine ]]; then start_docker_machine;
     elif [[ $1 == env ]]; then docker_machine_env;
