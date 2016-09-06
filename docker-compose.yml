@@ -11,4 +11,6 @@ web:
     VIRTUAL_HOST: rails-template.docker
 db:
   image: mongo:3.2.8
+  ports:
+    - "27017:27017"
   command: mongod --smallfiles --quiet
