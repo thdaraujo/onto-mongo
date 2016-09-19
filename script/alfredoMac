@@ -11,16 +11,17 @@ DOCKER_COMPOSE='docker-compose'
 function usage {
     echo "usage: ./scripts/init.sh [OPTIONS]:"
     echo " "
-    echo " machine:    Starts default docker machine."
-    echo " env:        Sets env variables."
-    echo " build:      Builds everything, images and containers."
-    echo " run:        Runs the app on the latest container."
-    echo " mongo:      Connects to the mongoDB container instance."
-    echo " clean:      Stops and Removes all containers."
-    echo " purge:      Stops and Removes all containers and images."
-    echo " restart:    Stops all containers and then 'run'."
-    echo " help:       Prints this message."
-    echo " open:       Opens web site (default container ip + port 3000)."
+    echo " machine:            Starts default docker machine."
+    echo " env:                Sets env variables."
+    echo " build:              Builds everything, images and containers."
+    echo " bundle_install:     Runs bundle install."
+    echo " run:                Runs the app on the latest container."
+    echo " mongo:              Connects to the mongoDB container instance."
+    echo " clean:              Stops and Removes all containers."
+    echo " purge:              Stops and Removes all containers and images."
+    echo " restart:            Stops all containers and then 'run'."
+    echo " help:               Prints this message."
+    echo " open:               Opens web site (default container ip + port 3000)."
     echo " "
 }
 function check_deps {
@@ -65,6 +66,9 @@ function build {
     build_purge
     ${DOCKER_COMPOSE} build                   # Builds a new image.
 }
+function bundle_install {
+    ${DOCKER_COMPOSE} run web bundle install
+}
 function start_docker_machine {
     docker-machine start default
     eval "$(docker-machine env default)"
@@ -80,6 +84,7 @@ function app_open {
 
 if check_deps; then
     if [[ $1 == build ]]; then build;
+    elif [[ $1 == bundle_install ]]; then bundle_install;
     elif [[ $1 == purge ]]; then build_purge;
     elif [[ $1 == clean ]]; then build_clean;
     elif [[ $1 == restart ]]; then app_restart;
