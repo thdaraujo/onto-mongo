@@ -7,7 +7,7 @@ module OntoSplit
     where = sparql.downcase.split("where")
 
     w = where[1].delete '{' '}'
-    triples = w.split(/[.;]/)
+    triples = w.split(/[.;\n]/)
 
     t_arr = Array.new
     triples.each do |t|
