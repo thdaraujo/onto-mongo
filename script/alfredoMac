@@ -11,6 +11,7 @@ DOCKER_COMPOSE='docker-compose'
 function usage {
     echo "usage: ./scripts/init.sh [OPTIONS]:"
     echo " "
+    echo " create:     Creates default docker machine."
     echo " machine:    Starts default docker machine."
     echo " env:        Sets env variables."
     echo " build:      Builds everything, images and containers."
@@ -65,6 +66,10 @@ function build {
     build_purge
     ${DOCKER_COMPOSE} build                   # Builds a new image.
 }
+function create_docker_machine {
+    docker-machine create --driver virtualbox default
+    eval "$(docker-machine env default)"
+}
 function start_docker_machine {
     docker-machine start default
     eval "$(docker-machine env default)"
@@ -87,6 +92,7 @@ if check_deps; then
     elif [[ $1 == mongo ]]; then app_mongo;
     elif [[ $1 == help ]]; then usage;
     elif [[ $1 == machine ]]; then start_docker_machine;
+    elif [[ $1 == create ]]; then create_docker_machine;
     elif [[ $1 == env ]]; then docker_machine_env;
     elif [[ $1 == open ]]; then app_open;
     else { echo ""; echo "Error: no valid argument."; echo ""; usage; echo "Exiting..."; exit 0; }
