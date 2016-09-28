@@ -66,9 +66,14 @@ function build {
     build_purge
     ${DOCKER_COMPOSE} build                   # Builds a new image.
 }
+<<<<<<< HEAD
 function create_docker_machine {
     docker-machine create --driver virtualbox default
     eval "$(docker-machine env default)"
+=======
+function bundle_install {
+    ${DOCKER_COMPOSE} run web bundle install
+>>>>>>> 9387ac74079afce436e5ff975ca219972f7fd3c2
 }
 function start_docker_machine {
     docker-machine start default
@@ -85,6 +90,7 @@ function app_open {
 
 if check_deps; then
     if [[ $1 == build ]]; then build;
+    elif [[ $1 == bundle_install ]]; then bundle_install;
     elif [[ $1 == purge ]]; then build_purge;
     elif [[ $1 == clean ]]; then build_clean;
     elif [[ $1 == restart ]]; then app_restart;
