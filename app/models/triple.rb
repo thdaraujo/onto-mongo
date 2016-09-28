@@ -16,4 +16,8 @@ class Triple
    def object
      @object
    end
+
+   def json
+     return { subject: @subject, property: @predicate, object: @object}
+   end
 end

@@ -68,9 +68,11 @@ module OntoMap
   def expand_query(sparql)
     # TODO montar uma estrutura +- como essa a partir do sparql
     # exemplo:
-    [{ subject: "?person", property: :a, object: 'foaf:Person'     },
-     { subject: "?person", property: "foaf:name", object: 'Wagner da Silva' },
-     { subject: "?person", property: "foaf:mbox", object: 'teste@gmail.com' }]
+    
+    OntoSplit.split(sparql)
+    # [{ subject: "?person", property: :a, object: 'foaf:Person'     },
+    #  { subject: "?person", property: "foaf:name", object: 'Wagner da Silva' },
+    #  { subject: "?person", property: "foaf:mbox", object: 'teste@gmail.com' }]
   end
 
   def build_query(arr)
