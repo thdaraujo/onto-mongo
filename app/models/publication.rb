@@ -30,6 +30,11 @@ class Publication
       model.medium           = article["DADOS_BASICOS_DO_ARTIGO"]["MEIO_DE_DIVULGACAO"]
       model.doi              = article["DADOS_BASICOS_DO_ARTIGO"]["DOI"]
 
+      # TODO get other authors...
+      # <AUTORES NOME-COMPLETO-DO-AUTOR="Patrick B. Luc as da Silva" NOME-PARA-CITACAO="SILVA, P. B. L. A."
+      # TODO get other types of publications...
+      # like workshops etc.
+
       model
     else
       nil
