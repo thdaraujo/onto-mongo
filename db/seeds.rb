@@ -9,7 +9,7 @@
 
 files = Dir.glob('cvs/amostra/*.xml')
 hashes = files.map{|file|
-                    xml = File.read(file)
+                    xml = File.read(file).encode('utf-8')
                     Hash.from_xml(xml)
                   }
 
