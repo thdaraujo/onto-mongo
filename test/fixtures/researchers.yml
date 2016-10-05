@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  name_in_citations: MyString
-  country: MyString
+  name: Eliana da Silva Pereira
+  name_in_citations: PEREIRA, E. S.
+  country: Brasil
   resume: MyString
 
 two:
-  name: MyString
-  name_in_citations: MyString
-  country: MyString
-  resume: MyString
+  name: Jorge Mauler Júnior
+  name_in_citations: MAULER JÚNIOR, J.
+  country: Brasil
+  resume: Possui graduação em Engenharia Química pela Universidade Federal Rural do Rio de Janeiro (2001), Mestre em Ciências (PPGEQ) na área de Engenharia Quimica pela Universidade Federal Rural do Rio de Janeiro (concluído em 2004). Tem experiência na área de Engenharia Química, com ênfase em Operações Unitárias, atuando principalmente nos seguintes temas: secador, exaustor eólico e energia eólica. Atualmente leciona as seguintes disciplinas nos seguintes cursos de nível superior na instituição de ensino UNIGRANRIO: Mineralogia, Química Computacional, Físico-química I, Físico-química II, Corrosão, Mecânica de Fluidos, Operações Unitárias I e II, Físico-química Prática de Laboratório, Química Geral Experimental II, Escoamento multifásico e monofásico, Princípios de Engenharia Química I.Atuou também na disciplina de Química Aplicada no curso de Graduação Tecnológica em Radiologia.  É integrante do Colegiado de Curso de Química (Bacharelado e Licenciatura)(UNIGRANRIO). É integrante do NDE (Núcleo Docente Estruturante) do curso de Engenharia Química (UNIGRANRIO).  Participou como colaborador para esclarecimento dos alunos do curso de Química à cerca da Avaliação do ENADE através da Plataforma Moddle; dando suporte à duvidas através dos fóruns e mensagens. Participou da elaboração do Plano pedagógico do Curso de Engenharia Química iniciado em 2011/I.
