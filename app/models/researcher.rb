@@ -15,11 +15,10 @@ class Researcher
     maps from: 'pais', to: :country
 
     sparql = %(
-      PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-      SELECT ?mbox
+      PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+      SELECT ?name
       WHERE
-        { ?x foaf:name "Johnny Lee Outlaw" .
-          ?x foaf:mbox ?mbox }
+        { ?x foaf:name ?name }
     )
 
     query(sparql)
