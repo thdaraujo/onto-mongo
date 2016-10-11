@@ -1,5 +1,6 @@
 class Publication
   include Mongoid::Document
+  include OntoMap
 
   has_and_belongs_to_many :researchers
 

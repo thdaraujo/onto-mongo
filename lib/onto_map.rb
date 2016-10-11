@@ -29,40 +29,33 @@ module OntoMap
     @ontology_class = ontology_class
   end
 
-  def maps(relation, property)
+  def maps(attributes)
+    relation = attributes[:from]
+    property = attributes[:to]
+
     @mapping ||= {}
     @mapping[relation] = property
   end
 
   def query(sparql)
-    expanded_query = expand_query(sparql)
-    query = build_query(expanded_query)
+    triples = expand_query(sparql)
     model = nil
-    result = []
 
     # descobrir qual é a model: quem for da ontoclass foaf:Person
-    # vamos supor que seja sempre CV no momento (TODO)
-    if query[:ontoclass] == 'foaf:Person'
-      model = CV
-      # TODO filter...
-      result = model.all
-    end
+    # vamos supor que seja sempre Researcher no momento (TODO)
+    #if triples :ontoclass ... == 'foaf:Person'
+      model = Researcher
+    #end
 
-    query[:relations].each do |relation|
-      # where :name == fulano, etc.
-      prop = relation[:property]
-      property = @mapping[prop]
-      value = relation[:object]
+    filters = triples.map{|triple|
+      property = @mapping[triple.predicate]
+      value = triple.object
+      puts "predicate = #{triple.predicate}, #{property} == #{value}"
+      { property => value }
+    }
+    puts filters.to_yaml
 
-      puts "prop = #{prop}, #{property} == #{value}"
-
-
-      # TODO filter...
-      result = result.to_a.select{|cv|
-        cv.send(property) == value
-      }
-    end
-    result
+    model.where(filters)
   end
 
   def expand_query(sparql)
@@ -82,7 +75,7 @@ module OntoMap
     {
       subject: '?person',
       ontoclass: 'foaf:Person',
-      relations: [{ property: "foaf:name", object: 'Wagner da Silva' }]
+      relations: [{ property: "foaf:name", object: 'Marcelo Barreiros Maia Alves' }]
     }
   end
 
