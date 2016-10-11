@@ -9,17 +9,42 @@
 
 files = Dir.glob('cvs/amostra/*.xml')
 hashes = files.map{|file|
-                    xml = File.read(file)
+                    xml = File.read(file).encode('utf-8')
                     Hash.from_xml(xml)
                   }
 
 # save files adding dynamic fields
 puts '------------------------------------------'
+puts 'XMLS'
+puts '------------------------------------------'
+
 hashes.each do |hash|
   cv = CV.new(hash)
   cv.save!
-  puts cv.CURRICULO_VITAE["DADOS_GERAIS"]["NOME_COMPLETO"]
 end
 
 puts '------------------------------------------'
 puts "#{CV.all.size} files added to mongo!"
+puts '------------------------------------------'
+
+# save researchers (semi-structured)
+puts '------------------------------------------'
+puts 'RESEARCHERS AND PUBLICATIONS'
+puts '------------------------------------------'
+
+hashes.each do |hash|
+  model = Researcher.from_hash(hash)
+  model.save!
+
+  # TODO multiple publications...
+  publications = Publication.from_hash hash
+  model.publications << publications
+
+  model.save!
+
+end
+
+puts '------------------------------------------'
+puts "#{Researcher.all.size} researchers added to mongo!"
+puts "#{Publication.all.size} publications added to mongo!"
+puts '------------------------------------------'

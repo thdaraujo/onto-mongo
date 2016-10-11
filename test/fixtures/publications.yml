@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nature: COMPLETO
+  title: Levantamento das curvas características de um exaustor eólico II
+  year: 2005
+  country: Brasil
+  language: Português
+  medium: IMPRESSO
+  doi:
+  title_en:
+
+two:
+  nature: COMPLETO
+  title: Artigo 123
+  year: 2016
+  country: Brasil
+  language: Português
+  medium: IMPRESSO
+  doi: 1234567890
+  title_en: Article 123
