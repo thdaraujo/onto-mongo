@@ -1,8 +1,4 @@
 module OntoSplit
-  def self.test
-    puts 'ok2'
-  end
-
   def self.split(sparql)
     where = sparql.downcase.split("where")
 

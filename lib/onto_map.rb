@@ -66,27 +66,19 @@ module OntoMap
   end
 
   def expand_query(sparql)
-    # TODO montar uma estrutura +- como essa a partir do sparql
-    # exemplo:
-    
     OntoSplit.split(sparql)
-    # [{ subject: "?person", property: :a, object: 'foaf:Person'     },
-    #  { subject: "?person", property: "foaf:name", object: 'Wagner da Silva' },
-    #  { subject: "?person", property: "foaf:mbox", object: 'teste@gmail.com' }]
   end
 
-  def build_query(arr)
-    # TODO
-    # query.inject  ... montar um hash de subjects com suas listas de relações/properties
-    # por exemplo:
-    # ?person -> [a: "foaf:Person", "foaf:name" = "fulano", "foaf:mbox" = "123@4"]
-    # pode ser um objeto tbm... fica mais facil.
+  def build_query(triples)
+    subjects = Hash.new
+    triples.each do |t|
+      if !subjects.key? t.subject
+        subjects[t.subject] = Subject.new(t.subject)
+      end
+      subjects[t.subject].add_relation(t.predicate, t.object)
+    end
 
-    {
-      subject: '?person',
-      ontoclass: 'foaf:Person',
-      relations: [{ property: "foaf:name", object: 'Wagner da Silva' }]
-    }
+    return subjects
   end
 
   def print
