@@ -1,20 +1,9 @@
 class Triple
+  attr_accessor :subject, :predicate, :object
   def initialize(list)
-      @subject=list[0]
-      @predicate=list[1]
-      @object=list[2]
-   end
-
-   def subject
-     @subject
-   end
-
-   def predicate
-     @predicate
-   end
-
-   def object
-     @object
+      @subject = list[0]
+      @predicate = list[1]
+      @object = list[2]
    end
 
    def json
