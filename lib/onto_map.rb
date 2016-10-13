@@ -41,6 +41,7 @@ module OntoMap
     triples = expand_query(sparql)
     model = nil
 
+    # TODO
     # descobrir qual é a model: quem for da ontoclass foaf:Person
     # vamos supor que seja sempre Researcher no momento (TODO)
     #if triples :ontoclass ... == 'foaf:Person'
@@ -50,19 +51,15 @@ module OntoMap
     filters = triples.map{|triple|
       property = @mapping[triple.predicate]
       value = triple.object
-      puts "predicate = #{triple.predicate}, #{property} == #{value}"
       { property => value }
-    }
-    puts filters.to_yaml
+    }.inject({}){|hash, injected| hash.merge!(injected)}
 
+    puts filters.to_yaml
     model.where(filters)
   end
 
   def expand_query(sparql)
-    OntoSplit.split(sparql)
-    # [{ subject: "?person", property: :a, object: 'foaf:Person'     },
-    #  { subject: "?person", property: "foaf:name", object: 'Wagner da Silva' },
-    #  { subject: "?person", property: "foaf:mbox", object: 'teste@gmail.com' }]
+    OntoSplit.split(sparql).keep_if{|t| t.object.present? }
   end
 
   def build_query(arr)
