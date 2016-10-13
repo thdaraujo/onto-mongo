@@ -1,5 +1,6 @@
 class Researcher
   include Mongoid::Document
+  include OntoMap
 
   has_and_belongs_to_many :publications
 
@@ -7,6 +8,22 @@ class Researcher
   field :name_in_citations, type: String
   field :country, type: String
   field :resume, type: String
+
+  def setup
+    ontoclass 'foaf:Person'
+    maps from: 'foaf:name', to: :name
+    maps from: 'pais', to: :country
+    maps from: 'citationName', to: :name_in_citations
+
+    sparql = %(
+      PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+      SELECT ?name
+      WHERE
+        { ?x foaf:name 'Marcelo Barreiros Maia Alves' }
+    )
+
+    query(sparql)
+  end
 
   def self.from_hash(hash)
     model = Researcher.new

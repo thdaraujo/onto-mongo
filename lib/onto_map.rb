@@ -29,40 +29,33 @@ module OntoMap
     @ontology_class = ontology_class
   end
 
-  def maps(relation, property)
+  def maps(attributes)
+    relation = attributes[:from]
+    property = attributes[:to]
+
     @mapping ||= {}
     @mapping[relation] = property
   end
 
   def query(sparql)
-    expanded_query = expand_query(sparql)
-    query = build_query(expanded_query)
+    triples = expand_query(sparql)
     model = nil
-    result = []
 
+    # TODO
     # descobrir qual é a model: quem for da ontoclass foaf:Person
-    # vamos supor que seja sempre CV no momento (TODO)
-    if query[:ontoclass] == 'foaf:Person'
-      model = CV
-      # TODO filter...
-      result = model.all
-    end
+    # vamos supor que seja sempre Researcher no momento (TODO)
+    #if triples :ontoclass ... == 'foaf:Person'
+      model = Researcher
+    #end
 
-    query[:relations].each do |relation|
-      # where :name == fulano, etc.
-      prop = relation[:property]
-      property = @mapping[prop]
-      value = relation[:object]
+    filters = triples.map{|triple|
+      property = @mapping[triple.predicate]
+      value = triple.object
+      { property => value }
+    }.inject({}){|hash, injected| hash.merge!(injected)}
 
-      puts "prop = #{prop}, #{property} == #{value}"
-
-
-      # TODO filter...
-      result = result.to_a.select{|cv|
-        cv.send(property) == value
-      }
-    end
-    result
+    puts filters.to_yaml
+    model.where(filters)
   end
 
   def expand_query(sparql)
@@ -79,6 +72,19 @@ module OntoMap
     end
 
     return subjects
+  end
+
+  def build_query(arr)
+    # TODO
+    # query.inject  ... montar um hash de subjects com suas listas de relações/properties
+    # por exemplo:
+    # ?person -> [a: "foaf:Person", "foaf:name" = "fulano", "foaf:mbox" = "123@4"]
+    # pode ser um objeto tbm... fica mais facil.
+    {
+      subject: '?person',
+      ontoclass: 'foaf:Person',
+      relations: [{ property: "foaf:name", object: 'Marcelo Barreiros Maia Alves' }]
+    }
   end
 
   def print
