@@ -1,24 +1,58 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+onto-mongo is an ontology mapping/querying application for mongoDB that parses SPARQL queries and uses a mapping to access a mongoDB database, using Ruby on Rails and ActiveModel.
 
-Things you may want to cover:
+## Ruby version
 
-* Ruby version
+- ruby 2.3.0
+- rails 5
 
-* System dependencies
+## System dependencies
 
-* Configuration
+- Docker
 
-* Database creation
+## Configuration
 
-* Database initialization
+Docker must be installed. See: [how to install docker](https://docs.docker.com/engine/installation/)
 
-* How to run the test suite
+## Building
 
-* Services (job queues, cache servers, search engines, etc.)
+To build the docker images, run:
+```
+$ docker-compose build
+```
 
-* Deployment instructions
+## Running
 
-* ...
+To run the rails web container and the mongoDB database container, run:
+```
+$ docker-compose up
+```
+
+## Database
+
+### Setup or Create the database:
+
+Run:
+```
+$ docker-compose run web rake db:setup
+```
+
+### Migrations
+
+There is no need to run migrations on MongoDB.
+
+### Seeding
+
+To seed the database with initial values:
+```
+$ docker-compose run web rake db:seed
+``` 
+
+## Testing
+
+Run rails tests suite via `$ rake`.
+
+## Deployment
+
+TODO
