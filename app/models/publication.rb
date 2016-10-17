@@ -2,7 +2,7 @@ class Publication
   include Mongoid::Document
   include OntoMap
 
-  has_and_belongs_to_many :researchers
+  belongs_to :researchers
 
   field :nature, type: String
   field :title, type: String

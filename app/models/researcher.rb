@@ -2,7 +2,7 @@ class Researcher
   include Mongoid::Document
   include OntoMap
 
-  has_and_belongs_to_many :publications
+  has_many :publications
 
   field :name, type: String
   field :name_in_citations, type: String
@@ -30,10 +30,14 @@ class Researcher
         ?firstName ?lastName ?awardName1 ?awardName2 ?year
       WHERE
       {
-        ?scientist :firstName ?firstName . ?scientist :lastName ?lastName .
-        ?scientist :gotAward ?aw1 .        ?scientist :gotAward ?aw2 .
-        ?aw1 :awardedInYear ?year .        ?aw2 :awardedInYear ?year .
-        ?aw1 :awardName ?awardName1 .      ?aw2 :awardName ?awardName2 .
+        ?scientist :firstName ?firstName .
+        ?scientist :lastName ?lastName .
+        ?scientist :gotAward ?aw1 .
+        ?scientist :gotAward ?aw2 .
+        ?aw1 :awardedInYear ?year .
+        ?aw2 :awardedInYear ?year .
+        ?aw1 :awardName ?awardName1 .
+        ?aw2 :awardName ?awardName2 .
         FILTER
           (?aw1 != ?aw2) }
     )
