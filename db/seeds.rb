@@ -46,7 +46,7 @@ end
 
 puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
-puts "#{Publication.all.size} publications added to mongo!"
+puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
 
 # save test researchers example from paper
@@ -68,5 +68,5 @@ model.save!
 
 puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
-puts "#{Publication.all.size} publications added to mongo!"
+puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
