@@ -24,6 +24,23 @@ class Researcher
      puts Researcher.query(sparql).to_a
   end
 
+  def test_paper
+    sparql = %(
+      SELECT
+        ?firstName ?lastName ?awardName1 ?awardName2 ?year
+      WHERE
+      {
+        ?scientist :firstName ?firstName . ?scientist :lastName ?lastName .
+        ?scientist :gotAward ?aw1 .        ?scientist :gotAward ?aw2 .
+        ?aw1 :awardedInYear ?year .        ?aw2 :awardedInYear ?year .
+        ?aw1 :awardName ?awardName1 .      ?aw2 :awardName ?awardName2 .
+        FILTER
+          (?aw1 != ?aw2) }
+    )
+
+
+  end
+
   def self.from_hash(hash)
     model = Researcher.new
     model.name              = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["NOME_COMPLETO"]
