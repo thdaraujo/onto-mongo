@@ -11,8 +11,10 @@ class Researcher
 
   ontoclass 'foaf:Person'
   maps from: 'foaf:name', to: :name
-  maps from: 'pais', to: :country
-  maps from: 'citationName', to: :name_in_citations
+  maps from: ':name', to: :name
+  maps from: ':pais', to: :country
+  maps from: ':citationName', to: :name_in_citations
+  maps from: ':published', to: :publications
 
   def test_example
     sparql = %(

@@ -1,4 +1,7 @@
-class Query
+require 'sparql'
+require 'sxp'
+
+class OntoQuery
   attr_accessor :sxp, :raw_sxp
 
   def initialize(sparql)
@@ -14,7 +17,6 @@ class Query
     sxp.last
   end
 
-  # ex: {"neq"=>[:aw1, :aw2]}
   def filter
     return nil unless body.present?
     ops = {
@@ -29,16 +31,20 @@ class Query
     { ops[op] => var_names }
   end
 
-  # ex:
-  # {
-  #  $project: {
-  #    "firstName": "$name.first",
-  #    "lastName": "$name.last",
-  #    "awardName1": "$award1.award",
-  #    "awardName2": "$award2.award",
-  #    "year": "$award1.year"
-  #  }
-  #}
+  def bgp
+    return nil unless body.present?
+    body.last
+  end
+
+  def triples
+      return nil unless bgp.present?
+      bgp.select{|e| e.first == :triple }.
+          map{|e|
+            _, *tail = e
+            Triple.new(tail)
+          }
+  end
+
   def project
     return nil unless sxp.include?(:project)
     sxp[sxp.index(:project) + 1].map(&:name)

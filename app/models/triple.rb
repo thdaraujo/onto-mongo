@@ -7,6 +7,6 @@ class Triple
    end
 
    def json
-     return { subject: @subject, property: @predicate, object: @object}
+     return { subject: @subject, property: @predicate, object: @object }
    end
 end
