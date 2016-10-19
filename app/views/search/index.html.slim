@@ -3,18 +3,19 @@
     = form_tag search_index_path, :method => 'get' do
       .form-group
         label for="search"  SPARQL Query
-        = text_area_tag :search, nil, class: 'form-control', rows: '10', cols: '50', placeholder: 'SPARQL' 
+        = text_area_tag :search, params[:search], class: 'form-control', rows: '10', cols: '50', placeholder: 'SPARQL'
       button.btn.btn-default type="submit"  Search
       hr
-  .row
-    table.table
-      thead
-        tr
-          th Nome
-      tbody
-        - @result.each do |r|
+  - if !@result.nil?
+    .row
+      table.table
+        thead
           tr
-            td
-              - r.name
-              
+            th Nome
+        tbody
+          - @result.each do |r|
+            tr
+              td
+                = r.name
+                
   
