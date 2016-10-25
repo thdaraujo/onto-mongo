@@ -28,10 +28,7 @@ module OntoMap
 
       triples = onto_query.triples
 
-      relations = triples.select{|triple|
-        property = prop(triple)
-        is_relation(model, property)
-      }
+      relations = extract_relations(triples, model)
 
       if relations.present?
         first_projection = {
@@ -79,14 +76,32 @@ module OntoMap
       # 2. dar algum match com as vars?
       output_projection = {
         "$project": {
-          "researcherName": "$name",
-          "publicationTitle1": "$publication1.title",
-          "publicationTitle2": "$publication2.title",
-          "year": "$publication1.year"
         }
       }
 
-      @onto_query
+      # variables are not relations (inverse of relations)
+      variables = extract_variables(triples, model)
+
+      onto_query.project.each do |output_var|
+        attribute = '$'
+
+        triple = variables.select{|triple| triple.object.name == output_var }.first
+        property = prop(triple)
+
+        # TODO: this might be wrong...
+        complex = relations.select{|rel| triple.subject.name == rel.object.name }.first
+        if complex.present?
+          attribute << complex.object.name.to_s + '.'
+        end
+
+        attribute << property.to_s
+        var = { triple.object.name.to_s => attribute }
+
+        output_projection[:$project].merge!(var)
+      end
+
+      parameters = [first_projection, unwinds.first, unwinds.second, second_projection, match, output_projection]
+      Researcher.collection.aggregate(parameters).to_a
     end
 
 
@@ -120,13 +135,41 @@ module OntoMap
 
     private
 
+      def extract_relations(triples, klass)
+        triples.select{|triple|
+          property = prop(triple)
+          is_relation(klass, property)
+        }
+      end
+
+      # variables are not relations
+      # (inverse of relations)
+      def extract_variables(triples, klass)
+        triples.reject{|triple|
+          property = prop(triple)
+          is_relation(klass, property)
+        }
+      end
+
       def is_relation(klass, property)
         klass.relations? && klass.relations[property.to_s].present?
       end
 
       def prop(triple)
         predicate = triple.predicate
-        mapping[predicate.to_s]
+        property = mapping[predicate.to_s]
+        if property.present?
+          return property
+        else
+          # try to find property on relations
+          self.relations.values.
+          select{|rel|
+            rel.klass.mapping.present? && rel.klass.mapping[predicate.to_s].present?
+          }.
+          map{|rel|
+            rel.klass.mapping[predicate.to_s].to_s
+          }.first
+        end
       end
 
 =begin
