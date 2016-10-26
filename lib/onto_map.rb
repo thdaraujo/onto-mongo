@@ -25,10 +25,12 @@ module OntoMap
     def query(sparql)
       @onto_query = OntoQuery.new(sparql)
       model = Researcher # TODO
+      parameters = []
 
       triples = onto_query.triples
-
       relations = extract_relations(triples, model)
+      # variables are not relations (inverse of relations)
+      variables = extract_variables(triples, model)
 
       if relations.present?
         first_projection = {
@@ -44,32 +46,83 @@ module OntoMap
         unwinds = relations.map do |triple|
           { "$unwind": "$" + triple.object.name.to_s }
         end
+
+        parameters << first_projection
+        parameters << unwinds
       end
 
-      # TODO second_projection
-      # pegar de onto_query.filter
+      # TODO de onde vem esse name?
       second_projection = {
         "$project": {
-          "name": true,
-          "publication1": true,
-          "publication2": true,
-          "twoInOneYear": {
-            "$and": [{
-              "$eq": ["$publication1.year", "$publication2.year"]
-            }, {
-              "$ne": ["$publication1.title", "$publication2.title"]
-            }]
-          }
+          "name": true
         }
       }
 
-      # TODO match
-      # basta declarar uma variavel na second_projection e usar aqui?
-      match = {
-        "$match": {
-          "twoInOneYear": true
-        }
-      }
+      # include filters in projection
+      filtered_variables = onto_query.filter.values.uniq.flatten(1)
+      if filtered_variables.present?
+
+        equality_filters = []
+        inequality_filters = []
+
+        filtered_variables.each do |f|
+          var = { f => true }
+          second_projection[:$project].merge!(var)
+        end
+
+        # TODO this might be wrong
+        # repeated variables indicate equality of attributes
+        equality_filters = variables.
+                            group_by{|triple| triple.object.name }.
+                            select{|object, group| group.size > 1 }.
+                            map{|object, group|
+                              group.map{|repeated_var|
+                                "$#{repeated_var.subject.name}.#{object}"
+                              }
+                            }.flatten(1)
+
+        # TODO Should we treat other cases, like >= ?
+        if onto_query.filter[:ne].present? && equality_filters.present?
+          inequality_filters = variables.
+                               select{|triple|
+                                 filtered_variables.include?(triple.subject.name)
+                              }.
+                              map{|triple|
+                                property = prop(triple)
+                                "$#{triple.subject.name}.#{property}"
+                              }
+
+          # we filter everything that should be different
+          # except the things that should be equal.
+          # ne_filter = not_equal_properties EXCEPT equal_properties
+          inequality_filters = inequality_filters - equality_filters
+        end
+
+
+        filters = []
+        filters << { "$eq": equality_filters   } if equality_filters.present?
+        filters << { "$ne": inequality_filters } if inequality_filters.present?
+
+        if filters.size > 1
+          filters = {"$and" => filters}
+        end
+
+        if filters.present?
+          filter_key = "somefilter"
+          second_projection[:$project].merge!({ filter_key => filters })
+
+          parameters << second_projection
+
+          # match
+          match = {
+            "$match": {
+              filter_key => true
+            }
+          }
+
+          parameters << match
+        end
+      end
 
       # TODO output_projection
       # 1. pegar as variaveis de output de onto_query.project
@@ -78,9 +131,6 @@ module OntoMap
         "$project": {
         }
       }
-
-      # variables are not relations (inverse of relations)
-      variables = extract_variables(triples, model)
 
       onto_query.project.each do |output_var|
         attribute = '$'
@@ -100,8 +150,12 @@ module OntoMap
         output_projection[:$project].merge!(var)
       end
 
-      parameters = [first_projection, unwinds.first, unwinds.second, second_projection, match, output_projection]
-      Researcher.collection.aggregate(parameters).to_a
+      parameters << output_projection
+
+      # TODO refactor parameters...
+      # parameters2 = [first_projection, unwinds, second_projection, match, output_projection].flatten(1)
+      final_parameters = parameters.flatten(1)
+      Researcher.collection.aggregate(final_parameters)
     end
 
 
@@ -171,7 +225,6 @@ module OntoMap
           }.first
         end
       end
-
 =begin
       def expand_query(sparql)
         OntoSplit.split(sparql)

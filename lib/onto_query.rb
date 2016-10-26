@@ -20,9 +20,9 @@ class OntoQuery
   def filter
     return nil unless body.present?
     ops = {
-      :==  => "eq", :!= => "neq",
-      :>= => "gte", :> => "gt",
-      :< => "lt",   :<= => "lte"
+      :== => :eq,  :!= => :ne,
+      :>= => :gte, :>  => :$gt,
+      :<  => :lt,  :<= => :lte
     }
 
     op, *args = body[body.index(:filter) + 1]
