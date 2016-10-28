@@ -1,4 +1,5 @@
 require 'sparql'
+
 module OntoSplit
   def self.split(sparql)
     t_arr = Array.new

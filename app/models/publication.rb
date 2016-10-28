@@ -2,7 +2,7 @@ class Publication
   include Mongoid::Document
   include OntoMap
 
-  has_and_belongs_to_many :researchers
+  embedded_in :researchers
 
   field :nature, type: String
   field :title, type: String
@@ -12,6 +12,16 @@ class Publication
   field :language, type: String
   field :medium, type: String
   field :doi, type: String
+
+  ontoclass 'foaf:Publication'
+  maps from: ':nature', to:  :nature
+  maps from: ':title', to:  :title
+  maps from: ':title_en', to:  :title_en
+  maps from: ':year', to:  :year
+  maps from: ':country', to:  :country
+  maps from: ':language', to:  :language
+  maps from: ':medium', to:  :medium
+  maps from: ':doi', to:  :doi
 
   def self.from_hash(hash)
     #neat little trick: Maybe monad.

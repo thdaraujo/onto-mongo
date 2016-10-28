@@ -46,5 +46,27 @@ end
 
 puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
-puts "#{Publication.all.size} publications added to mongo!"
+puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
+puts '------------------------------------------'
+
+# save test researchers example from paper
+puts '------------------------------------------'
+puts 'ADD TEST RESEARCHER Kristen Nygaard WITH TWO PUBLICATIONS IN THE SAME YEAR'
+puts '------------------------------------------'
+
+model = Researcher.create(name: "Kristen Nygaard",
+                       name_in_citations: "Nygaard, K.",
+                       country: "Noruega",
+                       resume: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+model.publications.create([
+  { nature: "COMPLETO", title: "Rosing Prize Paper Test", year: 1999, country: "Noruega", language: "Inglês", medium: "IMPRESSO"},
+  { nature: "COMPLETO", title: "Turing Award Paper Test", year: 2001, country: "Noruega", language: "Inglês", medium: "IMPRESSO"},
+  { nature: "COMPLETO", title: "IEEE John von Neumann Medal Paper Test", year: 2001, country: "Noruega", language: "Inglês", medium: "IMPRESSO"}
+])
+
+model.save!
+
+puts '------------------------------------------'
+puts "#{Researcher.all.size} researchers added to mongo!"
+puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'

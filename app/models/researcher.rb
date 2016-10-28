@@ -2,7 +2,7 @@ class Researcher
   include Mongoid::Document
   include OntoMap
 
-  has_and_belongs_to_many :publications
+  embeds_many :publications
 
   field :name, type: String
   field :name_in_citations, type: String
@@ -11,8 +11,10 @@ class Researcher
 
   ontoclass 'foaf:Person'
   maps from: 'foaf:name', to: :name
-  maps from: 'pais', to: :country
-  maps from: 'citationName', to: :name_in_citations
+  maps from: ':name', to: :name
+  maps from: ':pais', to: :country
+  maps from: ':citationName', to: :name_in_citations
+  maps from: ':published', to: :publications
 
   def test_example
     sparql = %(
@@ -22,6 +24,80 @@ class Researcher
          { ?x foaf:name 'Eliana da Silva Pereira' }
      )
      puts Researcher.query(sparql).to_a
+  end
+
+  # exemplo extraido do paper
+  # rodando a query abaixo, o resultado é obtido
+  # agora, precisamos transformar o sparql em uma query equivalente.
+  def test_paper
+    sparql = %(
+      SELECT
+        ?researcherName ?publicationTitle1 ?publicationTitle2 ?year
+      WHERE
+      {
+        ?scientist :name ?researcherName .
+        ?scientist :published ?publication1 .
+        ?scientist :published ?publication2 .
+        ?publication1 :year ?year .
+        ?publication2 :year ?year .
+        ?publication1 :title ?publicationTitle1 .
+        ?publication2 :title ?publicationTitle2 .
+        FILTER
+          (?publication1 != ?publication2) }
+    )
+
+    # esse sparql tem que virar a query abaixo
+
+    Researcher.collection.aggregate([{
+      "$project": {
+        "name": true,
+        "publication1": "$publications",
+        "publication2": "$publications"
+      }
+    }, {
+      "$unwind": "$publication1"
+    }, {
+      "$unwind": "$publication2"
+    }, {
+      "$project": {
+        "name": true,
+        "publication1": true,
+        "publication2": true,
+        "twoInOneYear": {
+          "$and": [{
+            "$eq": ["$publication1.year", "$publication2.year"]
+          }, {
+            "$ne": ["$publication1.title", "$publication2.title"]
+          }]
+        }
+      }
+    }, {
+      "$match": {
+        "twoInOneYear": true
+      }
+    }, {
+      "$project": {
+        "researcherName": "$name",
+        "publicationTitle1": "$publication1.title",
+        "publicationTitle2": "$publication2.title",
+        "year": "$publication1.year"
+      }
+    }])
+
+    # que retorna:
+
+    [{"_id"=>BSON::ObjectId('5804eced2f3ece00495e0a0e'),
+      "researcherName"=>"Kristen Nygaard",
+      "publicationTitle1"=>"Turing Award Paper Test",
+      "publicationTitle2"=>"IEEE John von Neumann Medal Paper Test",
+      "year"=>2001
+    },
+    {"_id"=>BSON::ObjectId('5804eced2f3ece00495e0a0e'),
+      "researcherName"=>"Kristen Nygaard",
+      "publicationTitle1"=>"IEEE John von Neumann Medal Paper Test",
+      "publicationTitle2"=>"Turing Award Paper Test",
+      "year"=>2001}]
+
   end
 
   def self.from_hash(hash)
