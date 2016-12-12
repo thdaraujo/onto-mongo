@@ -108,7 +108,7 @@ module OntoMap
         end
 
         if filters.present?
-          filter_key = "somefilter"
+          filter_key = "filter_1"
           second_projection[:$project].merge!({ filter_key => filters })
 
           parameters << second_projection
