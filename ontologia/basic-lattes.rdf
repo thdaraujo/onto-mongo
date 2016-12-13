@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://onto-mongo/basic-lattes#"
+     xml:base="http://onto-mongo/basic-lattes"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:basic-lattes="http://onto-mongo/basic-lattes#">
+    <owl:Ontology rdf:about="http://onto-mongo/basic-lattes"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#publicado_por -->
+
+    <owl:ObjectProperty rdf:about="http://onto-mongo/basic-lattes#publicado_por">
+        <owl:inverseOf rdf:resource="http://onto-mongo/basic-lattes#publicou"/>
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Artigo"/>
+        <rdfs:range rdf:resource="http://onto-mongo/basic-lattes#Pesquisador"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#publicou -->
+
+    <owl:ObjectProperty rdf:about="http://onto-mongo/basic-lattes#publicou">
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Pesquisador"/>
+        <rdfs:range rdf:resource="http://onto-mongo/basic-lattes#Artigo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#ano_publicacao -->
+
+    <owl:DatatypeProperty rdf:about="http://onto-mongo/basic-lattes#ano_publicacao">
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Artigo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#nome -->
+
+    <owl:DatatypeProperty rdf:about="http://onto-mongo/basic-lattes#nome">
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Pessoa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#sobrenome -->
+
+    <owl:DatatypeProperty rdf:about="http://onto-mongo/basic-lattes#sobrenome">
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Pessoa"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#titulo -->
+
+    <owl:DatatypeProperty rdf:about="http://onto-mongo/basic-lattes#titulo">
+        <rdfs:domain rdf:resource="http://onto-mongo/basic-lattes#Artigo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#Artigo -->
+
+    <owl:Class rdf:about="http://onto-mongo/basic-lattes#Artigo"/>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#Pesquisador -->
+
+    <owl:Class rdf:about="http://onto-mongo/basic-lattes#Pesquisador">
+        <rdfs:subClassOf rdf:resource="http://onto-mongo/basic-lattes#Pessoa"/>
+    </owl:Class>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#Pessoa -->
+
+    <owl:Class rdf:about="http://onto-mongo/basic-lattes#Pessoa"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#hachiko -->
+
+    <owl:NamedIndividual rdf:about="http://onto-mongo/basic-lattes#hachiko">
+        <rdf:type rdf:resource="http://onto-mongo/basic-lattes#Pessoa"/>
+        <sobrenome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Komatsu</sobrenome>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#obda -->
+
+    <owl:NamedIndividual rdf:about="http://onto-mongo/basic-lattes#obda">
+        <rdf:type rdf:resource="http://onto-mongo/basic-lattes#Artigo"/>
+        <ano_publicacao rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2017</ano_publicacao>
+        <titulo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OBDA with MongoDB</titulo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://onto-mongo/basic-lattes#renata -->
+
+    <owl:NamedIndividual rdf:about="http://onto-mongo/basic-lattes#renata">
+        <rdf:type rdf:resource="http://onto-mongo/basic-lattes#Pesquisador"/>
+        <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Renata</nome>
+        <sobrenome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wassermann</sobrenome>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+
