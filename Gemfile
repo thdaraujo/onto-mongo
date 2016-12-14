@@ -19,9 +19,13 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+#Implements SPARQL grammar parsing to SPARQL Algebra
 gem 'sparql', '~> 2.0'
+#Executes SPARQL queries
 gem 'sparql-client', '~> 2.1'
+#A metadistribution of RDF.rb including a full set of parsing/serialization plugins.
 gem 'linkeddata', '~> 2.0'
+#Universal S-expression parser with specific support for Common Lisp, Scheme, and RDF/SPARQL
 gem 'sxp'
 
 # Use Redis adapter to run Action Cable in production

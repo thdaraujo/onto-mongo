@@ -16,17 +16,19 @@ class Ontology
     SPARQL.execute(sparql, @repository)
   end
 
-  def self.teste
-    patterns = [[:subject, RDF::RDFS.subClassOf, :object]]
-    query = sparql.select.where([:subject, RDF::RDFS.subClassOf, :object])
-
-    query.each_solution do |solution|
-      puts solution.inspect
+  def translate(sparql)
+    triples = OntoSplit.split(sparql)
+    graph = Graph.new
+    triples.each do |t|
+      graph.add_parent(Node.new(t))
+      puts t.json
     end
 
-    return query
+    generate(graph)
   end
 
-
+  def generate(graph)
+    graph.root.triple.subject.model
+  end
 
 end
