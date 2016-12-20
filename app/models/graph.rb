@@ -1,7 +1,7 @@
 class Graph
   attr_accessor :root
 
-  def initialize
+  def initialize()
   end
 
   def add_parent(node)

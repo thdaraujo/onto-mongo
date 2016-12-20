@@ -4,9 +4,14 @@ module Example
     ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
     ontology.translate(sparql)
 
-    Researcher.all.each do |r|
-      puts "Nome >>>>>>>>>>>>>>> #{r.name}"
-    end
+
+    return ontology.execute(sparql)
+
+  end
+
+  def self.teste2
+    sparql = "SELECT ?nome ?sobrenome WHERE { ?x <http://onto-mongo/basic-lattes#nome> ?nome }"
+    onto = OntoQuery.new sparql
 
   end
 

@@ -134,7 +134,8 @@
 
     <owl:NamedIndividual rdf:about="http://onto-mongo/basic-lattes#hachiko">
         <rdf:type rdf:resource="http://onto-mongo/basic-lattes#Pessoa"/>
-        <sobrenome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Komatsu</sobrenome>
+        <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hachiko</nome>
+        <sobrenome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">komatsu</sobrenome>
     </owl:NamedIndividual>
     
 
@@ -156,6 +157,24 @@
         <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Renata</nome>
         <sobrenome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wassermann</sobrenome>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://onto-mongo/basic-lattes#hachiko"/>
+            <rdf:Description rdf:about="http://onto-mongo/basic-lattes#renata"/>
+        </owl:distinctMembers>
+    </rdf:Description>
 </rdf:RDF>
 
 

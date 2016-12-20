@@ -1,7 +1,7 @@
 class Node
   attr_accessor :triple
   attr_accessor :onto_class
-  attr_accessor :data_property
+  attr_accessor :data_properties
   attr_accessor :parent_nodes
   attr_accessor :name
 
@@ -10,18 +10,19 @@ class Node
     @name = triple.subject.var_name
     @onto_class = triple.subject.raw_ontoclass
     @parent_nodes = Array.new
-    @data_property = Array.new
+    @data_properties = Array.new
 
     if triple.object.is_class
       add_parent(triple)
     else
-      add_data_property(triple)
+      #pensar melhor....
+      add_data_properties(triple)
     end
-    
+
   end
 
-  def add_data_property(triple)
-    @data_property << triple.predicate
+  def add_data_properties(triple)
+    @data_properties << triple.predicate
   end
 
   def add_parent(triple)
