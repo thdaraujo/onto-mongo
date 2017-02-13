@@ -23,25 +23,45 @@ class Ontology
     #   return_var << _name.delete(':')
     # end
 
-    triples = OntoSplit.split(sparql)
-    graph = Graph.new
-    triples.each do |t|
-      graph.add_parent(Node.new(t))
-      puts t.json
-    end
+    graph = Graph.new(OntoSplit.split(sparql))
 
-    generate_query(graph)
+
+    load_data(graph.root)
   end
 
-  def generate_query(graph)
-    # implementado para uma classe somente
-    model = graph.root.triple.subject.model
-    data_to_insert = ""
-    m_count = model.all.count
-    att_count = graph.root.data_properties.size
+  def load_data(node)
+    #para cada nó do grafo chamo a funcao generate_data_to_insert
+    if node.parent_nodes.length > 0
+      node.parent_nodes.map { |n| load_data(n)  }
+    end
 
-    model.all.each_with_index do |m, m_index|
-      graph.root.data_properties.each_with_index do |att, att_index|
+    generate_data_to_insert(node)
+
+  end
+
+  private
+  def generate_data_to_insert(node)
+    # implementado para uma classe somente
+    model = node.triple.subject.model
+    data_to_insert = ""
+    wheres = Hash.new
+
+
+    node.filters.each do |f|
+      x = Mapping.get_mapping(model, f[:filter_name].raw)
+      y = f[:value].var_name
+      wheres = {x => y}
+    end
+
+    result = model.where(wheres)
+
+    m_count = result.count
+    att_count = node.data_properties.size
+    puts m_count
+
+    #attributes
+    result.each_with_index do |m, m_index|
+      node.data_properties.each_with_index do |att, att_index|
         data_to_insert.concat("<http://onto-mongo/basic-lattes/#{m.id}> #{att.predicate} \"#{m.attributes[Mapping.get_mapping(m, att.raw)]}\" ")
         if m_index == m_count -1 && att_index == att_count -1
           data_to_insert.concat(" \n")
@@ -52,10 +72,9 @@ class Ontology
     end
 
     generate_rdf_graph(data_to_insert)
-
+    puts data_to_insert
   end
 
-  private
   def generate_rdf_graph(data_to_insert)
 
     sse = SPARQL.parse(%(
