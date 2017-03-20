@@ -20,6 +20,7 @@ class Graph
   end
 
   def add_property(node, triple)
+    puts node.triple.object.raw_ontoclass
     #se o object for uma classe então cria um nó
     if node.triple.object.is_class
       node.parent_nodes << Node.new(node.triple)

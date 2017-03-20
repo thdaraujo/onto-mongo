@@ -27,6 +27,7 @@ gem 'sparql-client', '~> 2.1'
 gem 'linkeddata', '~> 2.0'
 #Universal S-expression parser with specific support for Common Lisp, Scheme, and RDF/SPARQL
 gem 'sxp'
+gem 'rgl', '~> 0.5.2'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'

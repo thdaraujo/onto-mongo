@@ -2,10 +2,12 @@ class Subject
   attr_accessor :subject
   attr_accessor :ontoclass
   attr_accessor :model
+  attr_accessor :name
 
   def initialize(subject)
     @subject = subject
     @relations = []
+    @name = raw_ontoclass
   end
 
   def add_relation(property, object)
