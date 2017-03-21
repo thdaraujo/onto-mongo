@@ -24,6 +24,9 @@ class Ontology
 
     triples.each_with_index do |t, index|
       #Verificar se já existe nó
+
+      #TODO repensar a criacao dos nós
+      #E se o subject for filtro e object for variavel??
       if @vertex_hash.has_key?(t.subject.name)
         #Quando o nó já existir entao é
         #necessário verificar se o object é um
@@ -35,17 +38,10 @@ class Ontology
       end
     end
 
-    return @graph
 
-  end
-
-  def load_data(node)
-    #para cada nó do grafo chamo a funcao generate_data_to_insert
-    if node.parent_nodes.length > 0
-      node.parent_nodes.map { |n| load_data(n)  }
+    @graph.each_vertex do |vertex|
+      generate_data_to_insert(@vertex_hash[vertex])
     end
-
-    generate_data_to_insert(node)
 
   end
 
@@ -54,7 +50,7 @@ class Ontology
   def create_vertex(triple)
     vertex_name = triple.subject.name
     @graph.add_vertex vertex_name
-    @vertex_hash[vertex_name] = Node.new(triple, vertex_name)
+    @vertex_hash[vertex_name] = Node.new(triple, vertex_name, triple.subject.raw_ontoclass)
   end
 
   def add_property(triple)
@@ -66,9 +62,9 @@ class Ontology
 
       #adicionando no hash
       if !@vertex_hash.has_key?(triple.object.name)#verifica se existe
-        @vertex_hash[triple.object.name] = Node.new(triple, triple.object.name)
+        @vertex_hash[triple.object.name] = Node.new(triple, triple.object.name, triple.object.raw_ontoclass)
       end
-    elsif triple.object.raw_ontoclass[0].eql?("?")
+    elsif triple.object.is_variable?
       #se object for uma variavel ?variavel adicionar na lista de atributos
       @vertex_hash[triple.subject.name].data_properties << triple.predicate
     else #senao deve ser um filtro
@@ -78,7 +74,8 @@ class Ontology
 
   def generate_data_to_insert(node)
     # implementado para uma classe somente
-    model = node.triple.subject.model
+
+    model = node.model
     data_to_insert = " "
     wheres = Hash.new
 
@@ -89,7 +86,11 @@ class Ontology
       wheres = {x => y}
     end
 
-    result = model.where(wheres)
+    if wheres.empty?
+      result = model.all
+    else
+      result = model.where(wheres)
+    end
 
     m_count = result.count
     att_count = node.data_properties.size

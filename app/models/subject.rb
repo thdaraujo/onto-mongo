@@ -1,38 +1,31 @@
 class Subject
   attr_accessor :subject
   attr_accessor :ontoclass
-  attr_accessor :model
   attr_accessor :name
 
   def initialize(subject)
     @subject = subject
     @relations = []
-    @name = raw_ontoclass
+    if self.is_variable?
+      @name = @subject.to_s.split('?')[1]
+    else
+      @name = @subject
+    end
   end
 
   def add_relation(property, object)
     @relations << {property: property, object: object}
   end
 
-  def raw_ontoclass
-    return @ontoclass.to_s.split('#')[1]
-  end
-
   def var_name
     return @subject
   end
 
-  def set_model
-    onto = @ontoclass.to_s.split('#')[1]
+  def is_variable?
+    return @subject[0].eql?("?")
+  end
 
-    case onto
-    when "Pessoa"
-      @model = Researcher
-    when "Artigo"
-      @model = Publication
-    else
-      puts "default"
-    end
-
+  def raw_ontoclass
+    return @ontoclass.to_s.split('#')[1]
   end
 end

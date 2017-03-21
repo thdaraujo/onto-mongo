@@ -32,8 +32,5 @@ class Triple
        @predicate.type = PredicateType::ObjectProperty
        @object.is_class = true
      end
-
-     #TODO pode ser um callback
-     @subject.set_model
    end
 end

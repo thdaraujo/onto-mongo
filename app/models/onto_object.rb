@@ -6,15 +6,23 @@ class OntoObject
 
   def initialize(object)
     @object = object
-    @name = raw_ontoclass
-  end
-
-  def raw_ontoclass
-    return @ontoclass.to_s.split('#')[1]
+    if self.is_variable?
+      @name = @object.to_s.split('?')[1]
+    else
+      @name = @object
+    end
   end
 
   def var_name
     return @object
+  end
+
+  def is_variable?
+    return @object[0].eql?("?")
+  end
+
+  def raw_ontoclass
+    return @ontoclass.to_s.split('#')[1]
   end
 
 end

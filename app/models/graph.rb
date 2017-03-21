@@ -20,11 +20,11 @@ class Graph
   end
 
   def add_property(node, triple)
-    puts node.triple.object.raw_ontoclass
+    puts node.triple.object.name
     #se o object for uma classe então cria um nó
     if node.triple.object.is_class
       node.parent_nodes << Node.new(node.triple)
-    elsif node.triple.object.raw_ontoclass[0].eql?("?")
+    elsif node.triple.object.is_variable?
       node.data_properties << triple.onto_object
       #se object for uma variavel ?variavel adicionar na lista de atributos
     else #senao deve ser um filtro
