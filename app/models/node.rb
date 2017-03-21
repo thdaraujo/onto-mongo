@@ -14,7 +14,6 @@ class Node
   end
 
   def set_model(ontoclass)
-    puts "Ontoclass = #{ontoclass}"
     case ontoclass
     when "Pessoa"
       @model = Researcher
