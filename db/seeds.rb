@@ -33,19 +33,24 @@ puts 'RESEARCHERS AND PUBLICATIONS'
 puts '------------------------------------------'
 
 hashes.each_with_index do |hash, index|
-  pp hash
   model = Researcher.from_hash(hash)
   model.save!
-
-  pp index
-  pp model.name
   # TODO multiple publications...
   publications = Publication.from_hash(hash)
   model.publications.push(publications.first)
   model.save!
-
 end
-=begin
+
+# create researchers for coauthors
+#TODO refactor
+#TODO remove duplicates researchers from database
+Researcher.all.map(&:publications).flatten.compact.
+               map(&:coauthors).flatten.compact.
+               map{|coauthor|
+                Researcher.create(name: coauthor[:name], name_in_citations: coauthor[:name_in_citations])
+              }
+
+
 puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
@@ -72,4 +77,3 @@ puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
-=end
