@@ -32,18 +32,20 @@ puts '------------------------------------------'
 puts 'RESEARCHERS AND PUBLICATIONS'
 puts '------------------------------------------'
 
-hashes.each do |hash|
+hashes.each_with_index do |hash, index|
+  pp hash
   model = Researcher.from_hash(hash)
   model.save!
 
+  pp index
+  pp model.name
   # TODO multiple publications...
-  publications = Publication.from_hash hash
-  model.publications << publications
-
+  publications = Publication.from_hash(hash)
+  model.publications.push(publications.first)
   model.save!
 
 end
-
+=begin
 puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
@@ -70,3 +72,4 @@ puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
+=end
