@@ -1,0 +1,11 @@
+digraph RGL__DirectedAdjacencyGraph {
+    researcher [
+        fontsize = 8,
+        label = researcher
+    ]
+
+    article [
+        fontsize = 8,
+        label = article
+    ]
+}

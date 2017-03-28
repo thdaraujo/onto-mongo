@@ -16,7 +16,9 @@ module Example
   end
 
   def self.graph
-    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome }"
+    sparql = "SELECT ?nome ?titulo WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome ." \
+                                 " ?article <http://onto-mongo/basic-lattes#titulo> ?titulo"\
+                               " }"
     ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
     graph = ontology.translate(sparql)
 
