@@ -2,9 +2,46 @@
 
 module OntoMap
 
+  attr_reader :ontology_classes
+
   def self.included(base)
     base.extend(ClassMethods)
   end
+
+  @registry = {}
+  @ontology_classes = {}
+
+  def self.registry
+    @registry
+  end
+
+  def self.mapping(class_name, &block)
+    definition_proxy = DefinitionProxy.new
+    definition_proxy.instance_eval(&block)
+  end
+
+
+  class DefinitionProxy
+    def factory(factory_class, &block)
+      factory = Factory.new
+      factory.instance_eval(&block)
+      OntoMap.registry[factory_class] = factory
+    end
+  end
+
+  class Factory < BasicObject
+    def initialize
+      @attributes = {}
+    end
+
+    attr_reader :attributes
+
+    def method_missing(name, *args, &block)
+      @attributes[name] = args[0]
+    end
+
+  end
+
 
   module ClassMethods
     attr_accessor :mapping, :ontology_class, :onto_query
