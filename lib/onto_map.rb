@@ -26,10 +26,8 @@ module OntoMap
     self.registry[onto_class].attr_mapping
   end
 
-  def self.get_relations(onto_class)
-    #OntoMap.get_model(model_class).relations #TODO ???
-    puts "TODO pegar relations da model class"
-    {}
+  def self.relations_for(onto_class)
+    self.registry[onto_class].relation_mapping
   end
 
   def self.mapping(onto_class, &block)
@@ -39,19 +37,37 @@ module OntoMap
   end
 
   def self.register(factory)
-    registry[factory.onto_class]        = factory
-    class_mapping[factory.onto_class]   = factory.model_class
-    model_mapping[factory.model_class]  = factory.onto_class
+    self.registry[factory.onto_class]        = factory
+    self.class_mapping[factory.onto_class]   = factory.model_class
+    self.model_mapping[factory.model_class]  = factory.onto_class
 
     # TODO get factory
     #OntoMap.factories[factory]  = factory
   end
 
+  def self.print
+    puts "mappings:"
+    self.class_mapping.each do |k, v|
+      puts "  #{k} -> #{v}"
+
+      puts "    attributes:"
+      attributes_for(k).each do |attr, val|
+        puts "      #{attr} -> #{val}"
+      end
+
+      puts "  relations:"
+      relations_for(k).each do |k, rel|
+        puts "      #{k} -> #{rel.to_s}"
+      end
+    end
+  end
+
   class Factory < Object
-    attr_accessor :attr_mapping, :onto_class, :model_class
+    attr_accessor :attr_mapping, :relation_mapping, :onto_class, :model_class
 
     def initialize(o)
       @attr_mapping = {}
+      @relation_mapping = {}
       @onto_class = o
     end
 
@@ -60,11 +76,38 @@ module OntoMap
     end
 
     def maps(attributes)
-      relation = attributes[:from]
-      property = attributes[:to]
-      @attr_mapping[relation] = property
+      class_attribute = attributes[:from]
+      model_attribute = attributes[:to]
+      relation = attributes[:relation]
+      if relation.nil?
+        @attr_mapping[class_attribute] = model_attribute
+      else
+        # TODO verificar se a model foi definida antes???
+        from_model = model_class
+        to_model = model_class.reflect_on_association(model_attribute).class_name.constantize
+
+        if to_model.nil?
+          raise ArgumentError, "association not found in model", attributes[:to]
+        end
+
+        @relation_mapping[relation] = Relation.new(class_attribute, relation, from_model, to_model)
+      end
+    end
+  end
+
+  class Relation
+    attr_reader :class_attribute, :model_attribute, :from_model, :to_model
+
+    def initialize(class_attribute, model_attribute, from_model, to_model)
+      @class_attribute = class_attribute
+      @model_attribute = model_attribute
+      @from_model = from_model
+      @to_model = to_model
     end
 
+    def to_s
+      "#{class_attribute} => #{from_model} #{model_attribute} a #{to_model}"
+    end
   end
 
   def self.included(base)
@@ -210,30 +253,6 @@ module OntoMap
       final_parameters = parameters.flatten(1)
       Researcher.collection.aggregate(final_parameters)
     end
-
-
-=begin
-    def query(sparql)
-      triples = expand_query(sparql)
-      model = nil
-
-      # TODO
-      # descobrir qual é a model: quem for da ontoclass foaf:Person
-      # vamos supor que seja sempre Researcher no momento (TODO)
-      #if triples :ontoclass ... == 'foaf:Person'
-        model = Researcher
-      #end
-
-      filters = triples.map{|triple|
-        property = @mapping[triple.predicate]
-        value = triple.object
-        { property => value }
-      }.inject({}){|hash, injected| hash.merge!(injected)}
-
-      puts filters.to_yaml
-      model.where(filters)
-    end
-=end
 
     def print
       puts "Ontoclass: #{@ontology_class}"

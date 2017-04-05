@@ -8,4 +8,5 @@ OntoMap.mapping 'Pesquisador' do
   maps from: ':language', to:  :language
   maps from: ':medium', to:  :medium
   maps from: ':doi', to:  :doi
+  maps relation: ':published', to: :publications
 end
