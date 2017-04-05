@@ -2,61 +2,81 @@
 
 module OntoMap
 
-  attr_reader :ontology_classes
+  def self.registry
+    @@registry ||= {}
+  end
+
+  def self.class_mapping
+    @@class_mapping ||= {}
+  end
+
+  def self.model_mapping
+    @@model_mapping ||= {}
+  end
+
+  def self.model_for(k)
+    OntoMap.class_mapping[k] || OntoMap.class_mapping[k.to_sym]
+  end
+
+  def self.class_for(k)
+    OntoMap.model_mapping[k] || OntoMap.model_mapping[k.to_sym]
+  end
+
+  def self.attributes_for(onto_class)
+    OntoMap.get_model_for(onto_class).attr_mapping
+  end
+
+  def self.get_relations(model_class)
+    #OntoMap.get_model(model_class).relations #TODO ???
+    puts "TODO pegar relations da model class"
+    {}
+  end
+
+  def self.mapping(onto_class, &block)
+    puts "mapping #{onto_class}"
+    factory = Factory.new(onto_class.to_sym)
+    factory.instance_eval(&block)
+    OntoMap.register(factory)
+  end
+
+  def self.register(factory)
+    puts "#{factory.onto_class} => #{factory.model_class}"
+
+    OntoMap.registry[factory.onto_class]        = factory
+    OntoMap.class_mapping[factory.onto_class]   = factory.model_class
+    OntoMap.model_mapping[factory.model_class]  = factory.onto_class
+    # TODO get factory
+    #OntoMap.factories[factory]  = factory
+  end
+
+  class Factory < Object
+    attr_accessor :attr_mapping, :onto_class, :model_class
+
+    def initialize(o)
+      @attr_mapping = {}
+      @onto_class = o
+    end
+
+    def model(m)
+      "factory -> #{m}"
+      @model_class = m
+    end
+
+    def maps(attributes)
+      "factory -> maps #{attributes}"
+      relation = attributes[:from]
+      property = attributes[:to]
+      attr_mapping[relation] = property
+    end
+
+  end
 
   def self.included(base)
     base.extend(ClassMethods)
   end
 
-  @registry = {}
-  @ontology_classes = {}
-
-  def self.registry
-    @registry
-  end
-
-  def self.mapping(class_name, &block)
-    definition_proxy = DefinitionProxy.new
-    definition_proxy.instance_eval(&block)
-  end
-
-
-  class DefinitionProxy
-    def factory(factory_class, &block)
-      factory = Factory.new
-      factory.instance_eval(&block)
-      OntoMap.registry[factory_class] = factory
-    end
-  end
-
-  class Factory < BasicObject
-    def initialize
-      @attributes = {}
-    end
-
-    attr_reader :attributes
-
-    def method_missing(name, *args, &block)
-      @attributes[name] = args[0]
-    end
-
-  end
-
-
   module ClassMethods
-    attr_accessor :mapping, :ontology_class, :onto_query
-
-    def ontoclass(ontology_class)
-      @ontology_class = ontology_class
-    end
-
-    def maps(attributes)
-      relation = attributes[:from]
-      property = attributes[:to]
-
-      @mapping ||= {}
-      @mapping[relation] = property
-    end
+    attr_reader :onto_query
 
     # TODO refactor...
     def query(sparql)
