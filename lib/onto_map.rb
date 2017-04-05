@@ -15,36 +15,34 @@ module OntoMap
   end
 
   def self.model_for(k)
-    OntoMap.class_mapping[k] || OntoMap.class_mapping[k.to_sym]
+    self.class_mapping[k]
   end
 
   def self.class_for(k)
-    OntoMap.model_mapping[k] || OntoMap.model_mapping[k.to_sym]
+    self.model_mapping[k]
   end
 
   def self.attributes_for(onto_class)
-    OntoMap.get_model_for(onto_class).attr_mapping
+    self.registry[onto_class].attr_mapping
   end
 
-  def self.get_relations(model_class)
+  def self.get_relations(onto_class)
     #OntoMap.get_model(model_class).relations #TODO ???
     puts "TODO pegar relations da model class"
     {}
   end
 
   def self.mapping(onto_class, &block)
-    puts "mapping #{onto_class}"
-    factory = Factory.new(onto_class.to_sym)
+    factory = Factory.new(onto_class)
     factory.instance_eval(&block)
-    OntoMap.register(factory)
+    register(factory)
   end
 
   def self.register(factory)
-    puts "#{factory.onto_class} => #{factory.model_class}"
+    registry[factory.onto_class]        = factory
+    class_mapping[factory.onto_class]   = factory.model_class
+    model_mapping[factory.model_class]  = factory.onto_class
 
-    OntoMap.registry[factory.onto_class]        = factory
-    OntoMap.class_mapping[factory.onto_class]   = factory.model_class
-    OntoMap.model_mapping[factory.model_class]  = factory.onto_class
     # TODO get factory
     #OntoMap.factories[factory]  = factory
   end
@@ -58,15 +56,13 @@ module OntoMap
     end
 
     def model(m)
-      "factory -> #{m}"
       @model_class = m
     end
 
     def maps(attributes)
-      "factory -> maps #{attributes}"
       relation = attributes[:from]
       property = attributes[:to]
-      attr_mapping[relation] = property
+      @attr_mapping[relation] = property
     end
 
   end
