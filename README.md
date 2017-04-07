@@ -47,7 +47,14 @@ There is no need to run migrations on MongoDB.
 To seed the database with initial values:
 ```
 $ docker-compose run web rake db:seed
-``` 
+```
+
+### Indexes
+To create mongoDB indices, run:
+
+```
+$ rake db:mongoid:create_indexes
+```
 
 ## Testing
 

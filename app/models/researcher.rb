@@ -1,3 +1,4 @@
+# coding: utf-8
 class Researcher
   include Mongoid::Document
   include OntoMap
@@ -8,6 +9,10 @@ class Researcher
   field :name_in_citations, type: String
   field :country, type: String
   field :resume, type: String
+
+  validates :name, :uniqueness => true
+  validates :name_in_citations, :uniqueness => true
+  index({ 'name' => 1, 'name_in_citations' => 1}, { unique: true, drop_dups: true }) 
 
   #ontoclass 'foaf:Person'
   #maps from: 'foaf:name', to: :name

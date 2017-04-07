@@ -1,3 +1,4 @@
+# coding: utf-8
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -6,6 +7,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+#create indices before seeding...
+puts 'creating indices...'
+Rake::Task['db:mongoid:create_indexes'].invoke
 
 files = Dir.glob('cvs/amostra/*.xml')
 hashes = files.map{|file|
@@ -34,21 +38,36 @@ puts '------------------------------------------'
 
 hashes.each_with_index do |hash, index|
   model = Researcher.from_hash(hash)
-  model.save!
-  # TODO multiple publications...
-  publications = Publication.from_hash(hash)
-  model.publications.push(publications.first)
-  model.save!
+  begin
+    model.save!
+    # TODO multiple publications...
+    publications = Publication.from_hash(hash)
+    model.publications.push(publications.first)
+    model.save!
+  rescue => ex
+    puts 'error on: #{model.name}'
+    puts ex.message
+  end
 end
 
 # create researchers for coauthors
 #TODO refactor
 #TODO remove duplicates researchers from database
+
+#names = Researcher.all.map{|r| [r.name, true]}.to_h
+#names_in_citation = Researcher.all.map{|r| [r.name_in_citations, true]}.to_h
+
 Researcher.all.map(&:publications).flatten.compact.
-               map(&:coauthors).flatten.compact.
-               map{|coauthor|
-                Researcher.create(name: coauthor[:name], name_in_citations: coauthor[:name_in_citations])
-              }
+  map(&:coauthors).flatten.compact.
+  uniq{|coauthor| coauthor[:name] }.
+  each do |coauthor|
+    begin
+      puts coauthor[:name]
+      Researcher.create!(name: coauthor[:name], name_in_citations: coauthor[:name_in_citations])
+    rescue => ex
+      puts ex.message
+    end
+  end
 
 
 puts '------------------------------------------'
@@ -65,6 +84,8 @@ model = Researcher.create(name: "Kristen Nygaard",
                        name_in_citations: "Nygaard, K.",
                        country: "Noruega",
                        resume: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+model.save!
+
 model.publications.create([
   { nature: "COMPLETO", title: "Rosing Prize Paper Test", year: 1999, country: "Noruega", language: "Inglês", medium: "IMPRESSO"},
   { nature: "COMPLETO", title: "Turing Award Paper Test", year: 2001, country: "Noruega", language: "Inglês", medium: "IMPRESSO"},
