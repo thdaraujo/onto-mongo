@@ -22,12 +22,15 @@ class Ontology
 
     #graph = Graph.new(OntoSplit.split(sparql))
     @graph = RGL::DirectedAdjacencyGraph.new
-    triples = OntoSplit.split(sparql)
+
+    onto_query = OntoQuery.new(sparql)
+    triples = onto_query.triples
+    #triples = OntoSplit.split(sparql)
 
     puts "Lista de triplas encontradas ------> "
     triples.each_with_index do |t, index|
       puts "Tripla #{index} ///////////////////////////////////////// "
-      puts "Tripla #{index} subject: #{t.subject.name}, predicate: #{t.predicate.raw}, object: #{t.object.name} "
+      puts "Tripla #{index} subject: #{t.subject.name}, predicate: #{t.predicate.name}, object: #{t.object.name} "
       #Verificar se já existe nó
 
       #TODO repensar a criacao dos nós
@@ -64,7 +67,7 @@ class Ontology
   private
 
   def create_vertex(triple)
-    puts "Criando vertice para tripla subject: #{triple.subject.name} predicate: #{triple.predicate.raw}"
+    puts "Criando vertice para tripla subject: #{triple.subject.name} predicate: #{triple.predicate.name}"
     vertex_name = triple.subject.name
     @graph.add_vertex vertex_name
     @vertex_hash[vertex_name] = Node.new(triple, vertex_name, triple.subject.raw_ontoclass)
@@ -100,7 +103,7 @@ class Ontology
     puts "O model -> #{model.to_s}"
 
     node.filters.each do |f|
-      x = Mapping.get_mapping(model, f[:filter_name].raw)
+      x = Mapping.get_mapping(model, f[:filter_name].name)
       y = f[:value].var_name
       wheres = {x => y}
     end
@@ -118,7 +121,7 @@ class Ontology
     #attributes
     result.each_with_index do |m, m_index|
       node.data_properties.each_with_index do |att, att_index|
-        @data_to_insert.concat("<http://onto-mongo/basic-lattes/#{m.id}> #{att.predicate} \"#{m.attributes[Mapping.get_mapping(m, att.raw)]}\" ")
+        @data_to_insert.concat("<http://onto-mongo/basic-lattes/#{m.id}> <#{att.predicate}> \"#{m.attributes[Mapping.get_mapping(m, att.name)]}\" ")
         if m_index == m_count -1 && att_index == att_count -1
           @data_to_insert.concat(" \n")
         else
@@ -129,6 +132,7 @@ class Ontology
   end
 
   def generate_rdf_graph(data_to_insert)
+    puts "Data to Insert => #{data_to_insert}"
 
     sse = SPARQL.parse(%(
       PREFIX onto: <http://onto-mongo/basic-lattes#>

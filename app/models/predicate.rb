@@ -6,9 +6,12 @@ class Predicate
     @predicate = predicate
   end
 
-  def raw
-    raw = @predicate.to_s.split('#')[1]
-    return raw[0..raw.size-2]
+  def name
+    return @predicate.fragment
+  end
+
+  def value
+    return @predicate.value
   end
 
 end

@@ -6,19 +6,19 @@ class OntoObject
 
   def initialize(object)
     @object = object
-    if self.is_variable?
-      @name = @object.to_s.split('?')[1]
+    if @object.variable?
+      @name = @object.name
     else
-      @name = @object
+      @name = nil
     end
   end
 
-  def var_name
-    return @object
+  def is_variable?
+    return @object.variable?
   end
 
-  def is_variable?
-    return @object[0].eql?("?")
+  def value
+    return @object.to_s
   end
 
   def raw_ontoclass

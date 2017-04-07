@@ -38,11 +38,17 @@ class OntoQuery
 
   def triples
       return nil unless bgp.present?
-      bgp.select{|e| e.first == :triple }.
-          map{|e|
-            _, *tail = e
-            Triple.new(tail)
-          }
+      if bgp.first == :triple
+        _, *tail = bgp
+        [Triple.new(tail)]
+      else
+        bgp.select{|e| e.first == :triple }.
+            map{|e|
+              _, *tail = e
+              Triple.new(tail)
+            }
+      end
+
   end
 
   def project

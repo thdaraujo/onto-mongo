@@ -3,26 +3,23 @@ class Subject
   attr_accessor :ontoclass
   attr_accessor :name
 
+ #TODO verificar quando não for variavel
   def initialize(subject)
     @subject = subject
     @relations = []
-    if self.is_variable?
-      @name = @subject.to_s.split('?')[1]
+    if @subject.variable?
+      @name = @subject.name
     else
-      @name = @subject
+      @name = nil
     end
   end
 
-  def add_relation(property, object)
-    @relations << {property: property, object: object}
-  end
-
-  def var_name
-    return @subject
+  def value
+    return @subject.to_s
   end
 
   def is_variable?
-    return @subject[0].eql?("?")
+    return @subject.variable?
   end
 
   def raw_ontoclass

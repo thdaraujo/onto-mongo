@@ -3,9 +3,4 @@ digraph RGL__DirectedAdjacencyGraph {
         fontsize = 8,
         label = researcher
     ]
-
-    article [
-        fontsize = 8,
-        label = article
-    ]
 }

@@ -1,10 +1,11 @@
 class Triple
   attr_accessor :subject, :predicate, :object
-  def initialize(list)
-      @subject = Subject.new(list[0])
-      @predicate = Predicate.new(list[1])
-      @object = OntoObject.new(list[2])
+  def initialize(triple)
+      @subject = Subject.new triple.first
+      @predicate = Predicate.new triple.second
+      @object = OntoObject.new triple.third
       set_ontoclass
+      puts "setou ontoclass"
    end
 
    def json
@@ -14,9 +15,9 @@ class Triple
    private
    def set_ontoclass
      sparql = "SELECT ?domain ?range ?type
-	    WHERE { #{@predicate.predicate.to_s} <http://www.w3.org/2000/01/rdf-schema#domain> ?domain .
-              #{@predicate.predicate.to_s} <http://www.w3.org/2000/01/rdf-schema#range> ?range .
-              #{@predicate.predicate.to_s} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }"
+	    WHERE { <#{@predicate.value}> <http://www.w3.org/2000/01/rdf-schema#domain> ?domain .
+              <#{@predicate.value}> <http://www.w3.org/2000/01/rdf-schema#range> ?range .
+              <#{@predicate.value}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }"
 
      ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
 
