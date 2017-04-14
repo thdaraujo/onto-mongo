@@ -3,18 +3,21 @@ class OntoObject
   attr_accessor :ontoclass
   attr_accessor :is_class
   attr_accessor :name
+  attr_accessor :is_variable
 
   def initialize(object)
     @object = object
-    if @object.variable?
-      @name = @object.name
-    else
+    if @object.class == String
       @name = nil
+      @is_variable = false
+    else
+      @name = @object.name
+      @is_variable = true
     end
   end
 
   def is_variable?
-    return @object.variable?
+    return @is_variable
   end
 
   def value

@@ -26,6 +26,10 @@ module OntoMap
     self.registry[onto_class].attr_mapping
   end
 
+  def self.inverted_attributes_for(onto_class)
+    self.registry[onto_class].attr_mapping.invert
+  end
+
   def self.relations_for(onto_class)
     self.registry[onto_class].relation_mapping
   end

@@ -1,35 +1,45 @@
 require 'rgl/adjacency'
 module Example
-  def self.teste
-    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome }"
-    ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
-    ontology.translate(sparql)
 
-
-    return ontology.execute(sparql)
-
-  end
-
-  def self.teste2
-    sparql = "SELECT ?nome ?sobrenome WHERE { ?x <http://onto-mongo/basic-lattes#nome> ?nome }"
-    onto = OntoQuery.new sparql
-  end
-
-  def self.graph
-    sparql = "SELECT ?nome ?titulo WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome ." \
+  def self.ex1
+    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome ." \
                                " }"
     ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
     graph = ontology.translate(sparql)
 
+=begin
+  EXEMPLO DE SAÍDA - CONSULTA FINAL
+    "$project": {
+      "name": true
+    }
+
+=end
   end
 
-  def self.query
-    sparql = "SELECT ?nome ?sobrenome WHERE { ?x <http://onto-mongo/basic-lattes#nome> ?nome }"
-    onto_query = OntoQuery.new(sparql)
-    return onto_query
 
+  def self.teste
+    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome ." \
+                               " }"
+    ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
+    graph = ontology.translate(sparql)
 
+=begin
+  EXEMPLO DE SAÍDA - CONSULTA FINAL
+    "$project": {
+      "name": true
+    }
+
+=end
   end
+
+  def self.ex2
+    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome . " \
+                                  "?researcher <http://onto-mongo/basic-lattes#nome> 'Marcelo Barreiros Maia Alves' " \
+                               " }"
+    ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
+    graph = ontology.translate(sparql)
+  end
+
 
 
 =begin

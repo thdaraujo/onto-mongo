@@ -2,11 +2,12 @@ require 'sparql'
 require 'sxp'
 
 class OntoQuery
-  attr_accessor :sxp, :raw_sxp
+  attr_accessor :sxp, :raw_sxp, :triples
 
   def initialize(sparql)
     @raw_sxp = SPARQL.parse(sparql).to_sxp
     @sxp     = SXP::Reader::SPARQL.read(@raw_sxp)
+    @triples = Array.new
   end
 
   def prefixes
@@ -33,11 +34,23 @@ class OntoQuery
 
   def bgp
     return nil unless body.present?
-    body.last
+    body
   end
 
   def triples
       return nil unless bgp.present?
+
+      # if @triples.empty?
+      #   b = body.size - 1
+      #   for i in 0..b
+      #     if body[i].first == :triple
+      #       @triples.push Triple.new(body[i].to_sxp)
+      #     end
+      #   end
+      # end
+      #
+      # return @triples
+
       if bgp.first == :triple
         _, *tail = bgp
         [Triple.new(tail)]

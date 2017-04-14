@@ -2,15 +2,18 @@ class Subject
   attr_accessor :subject
   attr_accessor :ontoclass
   attr_accessor :name
+  attr_accessor :is_variable
 
  #TODO verificar quando não for variavel
   def initialize(subject)
     @subject = subject
     @relations = []
-    if @subject.variable?
-      @name = @subject.name
-    else
+    if @subject.class == String
       @name = nil
+      @is_variable = false
+    else
+      @name = @subject.name
+      @is_variable = true
     end
   end
 
@@ -19,7 +22,7 @@ class Subject
   end
 
   def is_variable?
-    return @subject.variable?
+    return @is_variable
   end
 
   def raw_ontoclass

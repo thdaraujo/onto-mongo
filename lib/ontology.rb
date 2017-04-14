@@ -27,6 +27,7 @@ class Ontology
     triples = onto_query.triples
     #triples = OntoSplit.split(sparql)
 
+    puts "Quantidade de triplas --> #{triples.count}"
     puts "Lista de triplas encontradas ------> "
     triples.each_with_index do |t, index|
       puts "Tripla #{index} ///////////////////////////////////////// "
@@ -56,10 +57,10 @@ class Ontology
     puts "Gerando dados para inserir"
     puts "Grafo de tamanho #{@graph.size}"
     @graph.each_vertex do |vertex|
-      generate_data_to_insert(@vertex_hash[vertex])
+      @data_to_insert.concat(Generator.execute(@vertex_hash[vertex]))
     end
 
-    generate_rdf_graph(@data_to_insert)
+    #generate_rdf_graph(@data_to_insert)
     puts "data_to_insert => #{@data_to_insert}"
 
   end
@@ -96,44 +97,7 @@ class Ontology
     end
   end
 
-  def generate_data_to_insert(node)
-    # implementado para uma classe somente
-    model = node.model
-    wheres = Hash.new
-    puts "O model -> #{model.to_s}"
-
-    node.filters.each do |f|
-      x = Mapping.get_mapping(model, f[:filter_name].name)
-      y = f[:value].var_name
-      wheres = {x => y}
-    end
-
-    if wheres.empty?
-      result = model.all
-    else
-      result = model.where(wheres)
-    end
-
-    m_count = result.count
-    att_count = node.data_properties.size
-    puts m_count
-
-    #attributes
-    result.each_with_index do |m, m_index|
-      node.data_properties.each_with_index do |att, att_index|
-        @data_to_insert.concat("<http://onto-mongo/basic-lattes/#{m.id}> <#{att.predicate}> \"#{m.attributes[Mapping.get_mapping(m, att.name)]}\" ")
-        if m_index == m_count -1 && att_index == att_count -1
-          @data_to_insert.concat(" \n")
-        else
-          @data_to_insert.concat("\. \n")
-        end
-      end
-    end
-  end
-
   def generate_rdf_graph(data_to_insert)
-    puts "Data to Insert => #{data_to_insert}"
-
     sse = SPARQL.parse(%(
       PREFIX onto: <http://onto-mongo/basic-lattes#>
       INSERT DATA {
