@@ -31,7 +31,7 @@ class Generator
         value = f[:value].object.object
         temp_match[key] = value
       end
-      match["$match"] = "{$eq: #{temp_match}}"
+      match["$match"] = temp_match
       final_parameters << match
     end
 

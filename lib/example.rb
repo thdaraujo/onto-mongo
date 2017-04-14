@@ -18,18 +18,9 @@ module Example
 
 
   def self.teste
-    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome ." \
-                               " }"
-    ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
-    graph = ontology.translate(sparql)
-
-=begin
-  EXEMPLO DE SAÍDA - CONSULTA FINAL
-    "$project": {
-      "name": true
-    }
-
-=end
+    final = [{"$project"=>{:name=>true}}, {"$match"=> {:name=>'Marcelo Barreiros Maia Alves'}}]
+    # final = [{"$project"=>{:name=>true}}]
+    result = Researcher.collection.aggregate(final)
   end
 
   def self.ex2
@@ -38,6 +29,17 @@ module Example
                                " }"
     ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
     graph = ontology.translate(sparql)
+
+=begin
+      EXEMPLO DE SAÍDA - CONSULTA FINAL
+        "$project": {
+          "name": true
+        }
+        "$match": {
+          "name": 'Marcelo Barreiros Maia Alves'
+        }
+
+=end
   end
 
 
