@@ -12,7 +12,7 @@ class Researcher
 
   validates :name, :uniqueness => true
   validates :name_in_citations, :uniqueness => true
-  index({ 'name' => 1, 'name_in_citations' => 1}, { unique: true, drop_dups: true }) 
+  index({ 'name' => 1, 'name_in_citations' => 1}, { unique: true, drop_dups: true })
 
   #ontoclass 'foaf:Person'
   #maps from: 'foaf:name', to: :name
@@ -103,6 +103,23 @@ class Researcher
       "publicationTitle2"=>"Turing Award Paper Test",
       "year"=>2001}]
 
+  end
+
+  def coauthors
+    # TODO
+    # Researchers que aparecem como coautores em minhas publicacoes
+    # join?
+    coauthors = publications.map{|publication| publication.coauthors }.
+                             flatten(1).
+                             map{|coauthor|
+                              Researcher.where(name: coauthors)
+                             }
+  end
+
+  def related
+    # TODO
+    # coautores + researchers da mesma area + colegas de trabalho + orientador/orientando
+    []
   end
 
   def self.from_hash(hash)
