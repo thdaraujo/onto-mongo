@@ -1,9 +1,9 @@
 class Triple
   attr_accessor :subject, :predicate, :object
   def initialize(triple)
-      @subject = Subject.new triple.first
-      @predicate = Predicate.new triple.second
-      @object = OntoObject.new triple.third
+      @subject = Subject.new triple[1]
+      @predicate = Predicate.new triple[2]
+      @object = OntoObject.new triple[3]
       set_ontoclass
       puts "setou ontoclass"
    end

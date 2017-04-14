@@ -40,28 +40,15 @@ class OntoQuery
   def triples
       return nil unless bgp.present?
 
-      # if @triples.empty?
-      #   b = body.size - 1
-      #   for i in 0..b
-      #     if body[i].first == :triple
-      #       @triples.push Triple.new(body[i].to_sxp)
-      #     end
-      #   end
-      # end
-      #
-      # return @triples
-
-      if bgp.first == :triple
-        _, *tail = bgp
-        [Triple.new(tail)]
-      else
-        bgp.select{|e| e.first == :triple }.
-            map{|e|
-              _, *tail = e
-              Triple.new(tail)
-            }
+      if @triples.empty?
+        b = body.size - 1
+        for i in 0..b
+          if body[i].first == :triple
+            @triples.push Triple.new(body[i])
+          end
+        end
       end
-
+      return @triples
   end
 
   def project

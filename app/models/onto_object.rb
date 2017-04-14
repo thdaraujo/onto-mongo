@@ -7,7 +7,7 @@ class OntoObject
 
   def initialize(object)
     @object = object
-    if @object.class == String
+    if @object.value.class == String
       @name = nil
       @is_variable = false
     else
