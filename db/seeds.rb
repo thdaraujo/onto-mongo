@@ -98,3 +98,24 @@ puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
+
+
+# TODO
+def read_all
+  output = `ls -f -A`
+  dirs = output.split("\n").drop(2) # skip . and ..
+  p dirs[1]
+  p dirs[-1]
+
+  read = []
+
+  dirs.each do |item|
+    path = "#{item}/curriculo.xml"
+
+    if File.file?(path)
+      read << path
+      contents = File.read(path)
+      # do stuff
+    end
+  end
+end
