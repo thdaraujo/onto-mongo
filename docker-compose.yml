@@ -3,6 +3,7 @@ web:
   command: bundle exec rails s -p 3000 -b '0.0.0.0'
   volumes:
     - .:/myapp
+     - ../../../Desktop/data-data/lattes-unzip:/data
   ports:
     - "3000:3000"
   links:

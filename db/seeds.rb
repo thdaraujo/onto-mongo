@@ -11,9 +11,30 @@
 puts 'creating indices...'
 Rake::Task['db:mongoid:create_indexes'].invoke
 
-files = Dir.glob('cvs/amostra/*.xml')
+
+# TODO
+def filenames
+  # conf.echo = false
+  cvs_path = "/home/data/lattes-unzip"
+  output = `ls -f -A #{cvs_path}`
+  dirs = output.split("\n").drop(2) # skip . and ..
+  p dirs[1]
+  p dirs[-1]
+
+  files = dirs.map {|item|
+    path = cvs_path + "#{item}/curriculo.xml"
+    path
+  }
+end
+
+# files = Dir.glob('cvs/amostra/*.xml')
+# files = filenames
+files = filenames[0..99] #TODO get all of them...
+
+puts "#{files.size} found..."
+
 hashes = files.map{|file|
-                    xml = File.read(file).encode('utf-8')
+                    xml = File.read(file).encode('utf-8') if File.file?(file)
                     Hash.from_xml(xml)
                   }
 
@@ -98,24 +119,3 @@ puts '------------------------------------------'
 puts "#{Researcher.all.size} researchers added to mongo!"
 puts "#{Researcher.all.map{|r| r.publications.size }.sum} publications added to mongo!"
 puts '------------------------------------------'
-
-
-# TODO
-def read_all
-  output = `ls -f -A`
-  dirs = output.split("\n").drop(2) # skip . and ..
-  p dirs[1]
-  p dirs[-1]
-
-  read = []
-
-  dirs.each do |item|
-    path = "#{item}/curriculo.xml"
-
-    if File.file?(path)
-      read << path
-      contents = File.read(path)
-      # do stuff
-    end
-  end
-end
