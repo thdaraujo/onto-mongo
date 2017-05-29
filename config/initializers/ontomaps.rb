@@ -9,5 +9,17 @@ OntoMap.mapping 'Pessoa' do
   maps from: 'language', to:  :language
   maps from: 'medium', to:  :medium
   maps from: 'doi', to:  :doi
-  maps relation: 'published', to: :publications
+  maps relation: 'publicou', to: :publications
+end
+
+OntoMap.mapping 'Artigo' do
+  model Publication
+  maps from: 'natureza', to: :nature
+  maps from: 'titulo', to: :title
+  maps from: 'titulo_em_ingles', to: :title_en
+  maps from: 'ano', to: :year
+  maps from: 'pais', to: :country
+  maps from: 'idioma', to: :language
+  maps from: 'veiculo', to: :medium
+  maps from: 'doi', to: :doi
 end

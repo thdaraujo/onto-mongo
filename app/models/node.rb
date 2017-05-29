@@ -4,6 +4,7 @@ class Node
   attr_accessor :name
   attr_accessor :filters
   attr_accessor :ontoclass
+  attr_accessor :adjacent_nodes
 
   def initialize(triple, name, ontoclass)
     @name = name #nome para o nó(como se fosse id)
@@ -11,6 +12,7 @@ class Node
     @filters = Array.new #filtros
     @triple = triple
     @ontoclass = ontoclass
+    @adjacent_nodes = Hash.new
   end
 
 end

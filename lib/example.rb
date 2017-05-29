@@ -42,6 +42,27 @@ module Example
 =end
   end
 
+  def self.ex3
+    sparql = "SELECT ?nome WHERE { ?researcher <http://onto-mongo/basic-lattes#nome> ?nome . " \
+                                  "?researcher  <http://onto-mongo/basic-lattes#publicou> ?article." \
+                                  "?article <http://onto-mongo/basic-lattes#titulo> ?title " \
+                               " }"
+    ontology = Ontology.new("/myapp/ontologia/basic-lattes.rdf")
+    graph = ontology.translate(sparql)
+
+=begin
+      EXEMPLO DE SAÍDA - CONSULTA FINAL
+        "$project": {
+          "name": true,
+          "artigos1": '$publications'
+        }
+        "$unwind": {
+          "artigos1"
+        }
+
+=end
+  end
+
 
 
 =begin

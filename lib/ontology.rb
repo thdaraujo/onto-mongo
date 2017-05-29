@@ -56,11 +56,11 @@ class Ontology
 
     puts "Gerando dados para inserir"
     puts "Grafo de tamanho #{@graph.size}"
-    @graph.each_vertex do |vertex|
-      @data_to_insert.concat(Generator.execute(@vertex_hash[vertex]))
-    end
 
-    #generate_rdf_graph(@data_to_insert)
+    generator = Generator.new(@graph, @vertex_hash)
+    @data_to_insert = generator.run
+
+    generate_rdf_graph(@data_to_insert)
     puts "data_to_insert => #{@data_to_insert}"
 
   end
@@ -78,8 +78,9 @@ class Ontology
     #se o object for uma classe então cria um nó
     if triple.object.is_class || triple.predicate.type == PredicateType::ObjectProperty
       #adicionar nó
-      add_vertex(triple.object.name) #se já existe nao faz nada
-      add_edge(triple.subject.name, triple.object.name)
+      @graph.add_vertex(triple.object.name) #se já existe nao faz nada
+      @graph.add_edge(triple.subject.name, triple.object.name)
+      @vertex_hash[triple.subject.name].adjacent_nodes[triple.object.name] = {:object => triple.object, :relation => triple.predicate}
       puts "Adicionando aresta entre vertices #{triple.subject.name} e #{triple.object.name}"
 
       #adicionando no hash

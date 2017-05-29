@@ -94,19 +94,21 @@ module OntoMap
           raise ArgumentError, "association not found in model", attributes[:to]
         end
 
-        @relation_mapping[relation] = Relation.new(class_attribute, relation, from_model, to_model)
+        #@relation_mapping[relation] = Relation.new(class_attribute, relation, from_model, to_model)
+        @relation_mapping[relation] = Relation.new(class_attribute, model_attribute, from_model, to_model, relation)
       end
     end
   end
 
   class Relation
-    attr_reader :class_attribute, :model_attribute, :from_model, :to_model
+    attr_reader :class_attribute, :model_attribute, :from_model, :to_model, :relation
 
-    def initialize(class_attribute, model_attribute, from_model, to_model)
+    def initialize(class_attribute, model_attribute, from_model, to_model, relation)
       @class_attribute = class_attribute
       @model_attribute = model_attribute
       @from_model = from_model
       @to_model = to_model
+      @relation = relation
     end
 
     def to_s
