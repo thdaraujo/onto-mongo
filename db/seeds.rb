@@ -1,17 +1,50 @@
 # coding: utf-8
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+# ---------------------------------------------------------------------------------------
+
+# mount partition read-only
+# sudo mount -t "ntfs" -ro "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000" "/dev/sda1" "/home/thiago/Desktop/temp-data"
+
+def get_pending_files
+  # todo filter lines already processed (starts with OK)
+  files = File.readlines("db/processing.txt").map{|f| f.chomp("\n")}
+end
+
+def generate_filenames_list
+  conf.echo = false
+  files = filenames
+  conf.echo = true
+  puts "#{files.size} files found."
+
+  # start with 10k files
+  files = files[0..10000].select{|f| File.exists?(f) }
+
+  File.open("db/processing.txt", "w+") do |f|
+    f.puts(files)
+  end
+  puts 'saved file list on processing.txt'
+end
+
+def filenames
+  cvs_path = "/home/thiago/Desktop/temp-data/lattes-unzip"
+  output = `ls -f -A #{cvs_path}`
+  dirs = output.split("\n").drop(2) # skip . and ..
+
+  files = dirs.map {|item|
+    path = cvs_path + "/#{item}/curriculo.xml"
+    path
+  }
+  files
+end
+
+# ---------------------------------------------------------------------------------------
 
 #create indices before seeding...
 puts 'creating indices...'
 Rake::Task['db:mongoid:create_indexes'].invoke
 
-files = Dir.glob('cvs/amostra/*.xml')
+#files = Dir.glob('cvs/amostra/*.xml')
+files = get_pending_files
 hashes = files.map{|file|
                     xml = File.read(file).encode('utf-8')
                     Hash.from_xml(xml)
