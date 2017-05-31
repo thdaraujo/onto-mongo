@@ -17,7 +17,7 @@ def generate_filenames_list
   puts "#{files.size} files found."
 
   # start with 10k files
-  files = files[0..10000].select{|f| File.exists?(f) }
+  files = files[0..1000].select{|f| File.exists?(f) }
 
   File.open("db/processing.txt", "w+") do |f|
     f.puts(files)
@@ -45,20 +45,25 @@ Rake::Task['db:mongoid:create_indexes'].invoke
 
 #files = Dir.glob('cvs/amostra/*.xml')
 files = get_pending_files
-hashes = files.map{|file|
-                    xml = File.read(file).encode('utf-8')
-                    Hash.from_xml(xml)
-                  }
 
 # save files adding dynamic fields
 puts '------------------------------------------'
 puts 'XMLS'
 puts '------------------------------------------'
 
-hashes.each do |hash|
-  cv = CV.new(hash)
-  cv.save!
-end
+hashes = files.map{|file|
+                    xml = File.read(file).encode('utf-8')
+                    hash = Hash.from_xml(xml)
+                    cv = CV.new(hash)
+                    cv.save!
+
+                    hash
+                  }
+
+#hashes.each do |hash|
+#  cv = CV.new(hash)
+#  cv.save!
+#end
 
 puts '------------------------------------------'
 puts "#{CV.all.size} files added to mongo!"
