@@ -14,11 +14,11 @@ development:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: onto-mongo_development
+      database: onto 
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - db:27017
+        - localhost:4321
       options:
         # Change the default write concern. (default = { w: 1 })
         # write:
@@ -33,14 +33,14 @@ development:
         #     - use: web
 
         # The name of the user for authentication.
-        # user: 'user'
+        # user: 'root'
 
         # The password of the user for authentication.
-        # password: 'password'
+        # password: 'some_password'
 
         # The user's database roles.
-        # roles:
-        #   - 'dbOwner'
+         roles:
+         #  - 'userAdminAnyDatabase'
 
         # Change the default authentication mechanism. Valid options are: :scram,
         # :mongodb_cr, :mongodb_x509, and :plain. (default on 3.0 is :scram, default
@@ -139,7 +139,7 @@ development:
     # Set the Mongoid and Ruby driver log levels when not in a Rails
     # environment. The Mongoid logger will be set to the Rails logger
     # otherwise.(default: :info)
-    # log_level: :info
+    log_level: :debug
 test:
   <<: *defaults
   clients:
