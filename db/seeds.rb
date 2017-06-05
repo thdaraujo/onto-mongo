@@ -2,9 +2,6 @@
 
 # ---------------------------------------------------------------------------------------
 
-# mount partition read-only
-# sudo mount -t "ntfs" -ro "uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000" "/dev/sda1" "/home/thiago/Desktop/temp-data"
-
 def get_pending_files
   # todo filter lines already processed (starts with OK)
   files = File.readlines("db/processing.txt").map{|f| f.chomp("\n")}
