@@ -7,6 +7,8 @@ class Generator
     @data_to_insert = ""
 
     @root = @vertex_hash[@graph.first]
+
+    #model = no futuro identificar qual é o documento principal
     @model = OntoMap.model_for(@root.ontoclass)
     @project = Hash.new
     @match = Hash.new
@@ -49,6 +51,7 @@ class Generator
       node.data_properties.each do |dp|
         field = OntoMap.attributes_for(node.ontoclass)[dp.name]
 
+        # article.title
         if @unwind_control.include?(node.name.to_s)
           compound_field = node.name.to_s + '.' + field.to_s
           puts "compound_field  #{compound_field}"
@@ -56,7 +59,6 @@ class Generator
         else
           @project[field] = true
         end
-
       end
 
       # unwind fields
@@ -86,26 +88,31 @@ class Generator
     result.each_with_index do |r, result_index|
       r.each_key do |key|
         if !key.to_s.eql?("_id")
+          puts "R: #{r[key].first[0]}"
+          #Eu quero ontoclass = Artigo e symbol = title
+          #mas está vindo Pessoa - title
+          node = @vertex_hash[key.to_sym]
 
-          pattern = /(\'|\"|\.|\*|\/|\-|\\)/
-        #  string.gsub(pattern){|match|"\\"  + match}
-
-          predicate = OntoMap.inverted_attributes_for(@root.ontoclass)[key.to_sym]
-
-          instance = r[key]
-
-          puts "aaa: #{@root.ontoclass}"
-
-          puts "PREDICADO: #{predicate} - VALUE: #{instance} - CLASS: #{instance.class}"
-
-          @data_to_insert = @data_to_insert + "<http://onto-mongo/basic-lattes/#{r["_id"]}>" \
-                                            "<http://onto-mongo/basic-lattes##{predicate}>"\
-                                            " \"#{instance}\" "
-          if result_index == result.count - 1
-            @data_to_insert.concat(" \n")
+          if node.nil?
+            puts "Não foi possível encontrar o vértice de #{key.to_s}."
           else
-            @data_to_insert.concat("\. \n")
+            #puts "Ontoclass: #{node.ontoclass}, symbol: #{key.to_sym}"
+
+            instance = r[key]
+            predicate = OntoMap.inverted_attributes_for(node.ontoclass)[instance.first[0].to_sym]
+
+            puts "PREDICADO: #{predicate} - VALUE: #{instance.first[1]} - CLASS: #{instance.class}"
+
+            @data_to_insert = @data_to_insert + "<http://onto-mongo/basic-lattes/#{r["_id"]}>" \
+                                              "<http://onto-mongo/basic-lattes##{predicate}>"\
+                                              " \"#{instance.first[1]}\" "
+            if result_index == result.count - 1
+              @data_to_insert.concat(" \n")
+            else
+              @data_to_insert.concat("\. \n")
+            end
           end
+
         end
       end
     end

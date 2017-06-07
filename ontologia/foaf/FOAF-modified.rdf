@@ -1,0 +1,1219 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY wot "http://xmlns.com/wot/0.1/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY renata "http://www.ime.usp.br/~renata/" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="&renata;FOAF-modified#"
+     xml:base="&renata;FOAF-modified"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wot="http://xmlns.com/wot/0.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:renata="http://www.ime.usp.br/~renata/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#">
+    <owl:Ontology rdf:about="&renata;FOAF-modified">
+        <dc:title>Friend of a Friend (FOAF) vocabulary</dc:title>
+        <dc:description>The Friend of a Friend (FOAF) RDF vocabulary, described using W3C RDF Schema and the Web Ontology Language.</dc:description>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/date -->
+
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/description -->
+
+    <owl:AnnotationProperty rdf:about="&dc;description"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/title -->
+
+    <owl:AnnotationProperty rdf:about="&dc;title"/>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmembershipClass -->
+
+    <owl:AnnotationProperty rdf:about="&renata;FOAF-modifiedmembershipClass">
+        <rdfs:label>membershipClass</rdfs:label>
+        <rdfs:comment>Indicates the class of individuals that are a member of a Group</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedname -->
+
+    <owl:AnnotationProperty rdf:about="&renata;FOAF-modifiedname">
+        <rdfs:label>name</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A name for some thing.</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&rdfs;label"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/2003/06/sw-vocab-status/ns#term_status -->
+
+    <owl:AnnotationProperty rdf:about="&vs;term_status"/>
+    
+
+
+    <!-- http://xmlns.com/wot/0.1/assurance -->
+
+    <owl:AnnotationProperty rdf:about="&wot;assurance"/>
+    
+
+
+    <!-- http://xmlns.com/wot/0.1/src_assurance -->
+
+    <owl:AnnotationProperty rdf:about="&wot;src_assurance"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedaccount -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedaccount">
+        <rdfs:label>account</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>Indicates an account held by this agent.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedaccountServiceHomepage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedaccountServiceHomepage">
+        <rdfs:label>account service homepage</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>Indicates a homepage of the service provide for this online account.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedaimChatID -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedaimChatID">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>AIM chat ID</rdfs:label>
+        <rdfs:comment>An AIM chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedbased_near -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedbased_near">
+        <rdfs:label>based near</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A location that something is based near, for some broadly human notion of near.</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedcurrentProject -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedcurrentProject">
+        <rdfs:label>current project</rdfs:label>
+        <rdfs:comment>A current project this person works on.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifieddepiction -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifieddepiction">
+        <rdfs:label>depiction</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A depiction of some thing.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedImage"/>
+        <owl:inverseOf rdf:resource="&renata;FOAF-modifieddepicts"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifieddepicts -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifieddepicts">
+        <rdfs:label>depicts</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A thing depicted in this representation.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedImage"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedfocus -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedfocus">
+        <rdfs:label>focus</rdfs:label>
+        <rdfs:comment>The underlying or &apos;focal&apos; entity associated with some SKOS-described concept.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedfundedBy -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedfundedBy">
+        <rdfs:label>funded by</rdfs:label>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:comment>An organization funding a project or person.</rdfs:comment>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedholdsAccount -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedholdsAccount">
+        <rdfs:label>account</rdfs:label>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:comment>Indicates an account held by this agent.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedhomepage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedhomepage">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>homepage</rdfs:label>
+        <rdfs:comment>A homepage for some thing.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedisPrimaryTopicOf"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedpage"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedicqChatID -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedicqChatID">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>ICQ chat ID</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>An ICQ chat ID</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedimg -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedimg">
+        <rdfs:label>image</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one&apos;s photo on a homepage).</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedImage"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifieddepiction"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedinterest -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedinterest">
+        <rdfs:label>interest</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A page about a topic of interest to this person.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedisPrimaryTopicOf -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedisPrimaryTopicOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>is primary topic of</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>A document that this thing is the primary topic of.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedpage"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedjabberID -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedjabberID">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>jabber ID</rdfs:label>
+        <rdfs:comment>A jabber ID for something.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedknows -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedknows">
+        <rdfs:label>knows</rdfs:label>
+        <rdfs:comment>A person known by this person (indicating some level of reciprocated interaction between the parties).</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedlogo -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedlogo">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>logo</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A logo representing some thing.</rdfs:comment>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmade -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmade">
+        <rdfs:label>made</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>Something that was made by this agent.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmaker -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmaker">
+        <rdfs:label>maker</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>An agent that  made this thing.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <owl:inverseOf rdf:resource="&renata;FOAF-modifiedmade"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmbox -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmbox">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>personal mailbox</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a &apos;static inverse functional property&apos;, in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmbox_sha1sum -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmbox_sha1sum">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>sha1sum of a personal mailbox URI name</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmember -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmember">
+        <rdfs:label>member</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>Indicates a member of a Group</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedGroup"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmsnChatID -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedmsnChatID">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>MSN chat ID</rdfs:label>
+        <rdfs:comment>An MSN chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedopenid -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedopenid">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>openid</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>An OpenID for an Agent.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedisPrimaryTopicOf"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedpage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedpage">
+        <rdfs:label>page</rdfs:label>
+        <rdfs:comment>A page or document about this thing.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <owl:inverseOf rdf:resource="&renata;FOAF-modifiedtopic"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedpastProject -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedpastProject">
+        <rdfs:label>past project</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A project this person has previously worked on.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedphone -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedphone">
+        <rdfs:label>phone</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A phone,  specified using fully qualified tel: URI scheme (refs: http://www.w3.org/Addressing/schemes.html#tel).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedprimaryTopic -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedprimaryTopic">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>primary topic</rdfs:label>
+        <rdfs:comment>The primary topic of some page or document.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <owl:inverseOf rdf:resource="&renata;FOAF-modifiedisPrimaryTopicOf"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedpublications -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedpublications">
+        <rdfs:label>publications</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A link to the publications of this person.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedschoolHomepage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedschoolHomepage">
+        <rdfs:label>schoolHomepage</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A homepage of a school attended by the person.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedtheme -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedtheme">
+        <rdfs:label>theme</rdfs:label>
+        <rdfs:comment>A theme.</rdfs:comment>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedthumbnail -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedthumbnail">
+        <rdfs:label>thumbnail</rdfs:label>
+        <rdfs:comment>A derived thumbnail image.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedImage"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedImage"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedtipjar -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedtipjar">
+        <rdfs:label>tipjar</rdfs:label>
+        <rdfs:comment>A tipjar document for this agent, describing means for payment and reward.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedpage"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedtopic -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedtopic">
+        <rdfs:label>topic</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A topic of some page or document.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedtopic_interest -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedtopic_interest">
+        <rdfs:label>topic_interest</rdfs:label>
+        <rdfs:comment>A thing of interest to this person.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedweblog -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedweblog">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>weblog</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>A weblog of some thing (whether person, group, company etc.).</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiedpage"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedworkInfoHomepage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedworkInfoHomepage">
+        <rdfs:label>work info homepage</rdfs:label>
+        <rdfs:comment>A work info homepage of some person; a page about their work for some organization.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedworkplaceHomepage -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedworkplaceHomepage">
+        <rdfs:label>workplace homepage</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A workplace homepage of some person; the homepage of an organization they work for.</rdfs:comment>
+        <rdfs:range rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedyahooChatID -->
+
+    <owl:ObjectProperty rdf:about="&renata;FOAF-modifiedyahooChatID">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:label>Yahoo chat ID</rdfs:label>
+        <rdfs:comment>A Yahoo chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedaccountName -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedaccountName">
+        <rdfs:label>account name</rdfs:label>
+        <rdfs:comment>Indicates the name (identifier) associated with this online account.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedage -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedage">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>age</rdfs:label>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:comment>The age in years of some agent.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedaimChatID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedaimChatID">
+        <rdfs:label>AIM chat ID</rdfs:label>
+        <rdfs:comment>An AIM chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiednick"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedbirthday -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedbirthday">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>birthday</rdfs:label>
+        <rdfs:comment>The birthday of this Agent, represented in mm-dd string form, eg. &apos;12-31&apos;.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifieddnaChecksum -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifieddnaChecksum">
+        <rdfs:label>DNA checksum</rdfs:label>
+        <rdfs:comment>A checksum for the DNA of some thing. Joke.</rdfs:comment>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedfamilyName -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedfamilyName">
+        <rdfs:label>familyName</rdfs:label>
+        <rdfs:comment>The family name of some person.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedfamily_name -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedfamily_name">
+        <rdfs:label>family_name</rdfs:label>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:comment>The family name of some person.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedfirstName -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedfirstName">
+        <rdfs:label>firstName</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>The first name of a person.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedgeekcode -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedgeekcode">
+        <rdfs:label>geekcode</rdfs:label>
+        <rdfs:comment>A textual geekcode for this person, see http://www.geekcode.com/geek.html</rdfs:comment>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedgender -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedgender">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>gender</rdfs:label>
+        <rdfs:comment>The gender of this Agent (typically but not necessarily &apos;male&apos; or &apos;female&apos;).</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedgivenName -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedgivenName">
+        <rdfs:label>Given name</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>The given name of some person.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedgivenname -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedgivenname">
+        <rdfs:label>Given name</rdfs:label>
+        <rdfs:comment>The given name of some person.</rdfs:comment>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedicqChatID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedicqChatID">
+        <rdfs:label>ICQ chat ID</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>An ICQ chat ID</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiednick"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedjabberID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedjabberID">
+        <rdfs:label>jabber ID</rdfs:label>
+        <rdfs:comment>A jabber ID for something.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedlastName -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedlastName">
+        <rdfs:label>lastName</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>The last name of a person.</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmbox_sha1sum -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedmbox_sha1sum">
+        <rdfs:label>sha1sum of a personal mailbox URI name</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.</rdfs:comment>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmsnChatID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedmsnChatID">
+        <rdfs:label>MSN chat ID</rdfs:label>
+        <rdfs:comment>An MSN chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiednick"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedmyersBriggs -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedmyersBriggs">
+        <rdfs:label>myersBriggs</rdfs:label>
+        <rdfs:comment>A Myers Briggs (MBTI) personality classification.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedname -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedname">
+        <rdfs:label>name</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A name for some thing.</rdfs:comment>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiednick -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiednick">
+        <rdfs:label>nickname</rdfs:label>
+        <rdfs:comment>A short informal nickname characterising an agent (includes login identifiers, IRC and other chat nicknames).</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedplan -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedplan">
+        <rdfs:label>plan</rdfs:label>
+        <rdfs:comment>A .plan comment, in the tradition of finger and &apos;.plan&apos; files.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedsha1 -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedsha1">
+        <rdfs:label>sha1sum (hex)</rdfs:label>
+        <rdfs:comment>A sha1sum hash, in hex.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedskypeID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedskypeID">
+        <rdfs:label>Skype ID</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A Skype ID</rdfs:comment>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiednick"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedstatus -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedstatus">
+        <rdfs:label>status</rdfs:label>
+        <rdfs:comment>A string expressing what the user is happy for the general public (normally) to know about their current activity.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedsurname -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedsurname">
+        <rdfs:label>Surname</rdfs:label>
+        <rdfs:comment>The surname of some person.</rdfs:comment>
+        <vs:term_status>archaic</vs:term_status>
+        <rdfs:domain rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedtitle -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedtitle">
+        <rdfs:label>title</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>Title (Mr, Mrs, Ms, Dr. etc)</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedyahooChatID -->
+
+    <owl:DatatypeProperty rdf:about="&renata;FOAF-modifiedyahooChatID">
+        <rdfs:label>Yahoo chat ID</rdfs:label>
+        <rdfs:comment>A Yahoo chat ID</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:subPropertyOf rdf:resource="&renata;FOAF-modifiednick"/>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://schema.org/CreativeWork -->
+
+    <owl:Class rdf:about="http://schema.org/CreativeWork">
+        <owl:equivalentClass rdf:resource="&renata;FOAF-modifiedDocument"/>
+    </owl:Class>
+    
+
+
+    <!-- http://schema.org/ImageObject -->
+
+    <owl:Class rdf:about="http://schema.org/ImageObject">
+        <owl:equivalentClass rdf:resource="&renata;FOAF-modifiedImage"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedAgent -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedAgent">
+        <rdfs:label>Agent</rdfs:label>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>An agent (eg. person, group, software or physical artifact).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedDocument -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedDocument">
+        <rdfs:label>Document</rdfs:label>
+        <owl:disjointWith rdf:resource="&renata;FOAF-modifiedOrganization"/>
+        <owl:disjointWith rdf:resource="&renata;FOAF-modifiedProject"/>
+        <rdfs:comment>A document.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedGroup -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedGroup">
+        <rdfs:label>Group</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:comment>A class of Agents.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedImage -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedImage">
+        <rdfs:label>Image</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:comment>An image.</rdfs:comment>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedLabelProperty -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedLabelProperty">
+        <rdfs:label>Label Property</rdfs:label>
+        <rdfs:comment>A foaf:LabelProperty is any RDF property with texual values that serve as labels.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedOnlineAccount -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedOnlineAccount">
+        <rdfs:label>Online Account</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment>An online account.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedOnlineChatAccount -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedOnlineChatAccount">
+        <rdfs:label>Online Chat Account</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:comment>An online chat account.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedOnlineEcommerceAccount -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedOnlineEcommerceAccount">
+        <rdfs:label>Online E-commerce Account</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:comment>An online e-commerce account.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedOnlineGamingAccount -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedOnlineGamingAccount">
+        <rdfs:label>Online Gaming Account</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedOnlineAccount"/>
+        <rdfs:comment>An online gaming account.</rdfs:comment>
+        <vs:term_status>unstable</vs:term_status>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedOrganization -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedOrganization">
+        <rdfs:label>Organization</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <owl:disjointWith rdf:resource="&renata;FOAF-modifiedPerson"/>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>An organization.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedPerson -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedPerson">
+        <rdfs:label>Person</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedAgent"/>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"/>
+        <owl:disjointWith rdf:resource="&renata;FOAF-modifiedProject"/>
+        <vs:term_status>stable</vs:term_status>
+        <rdfs:comment>A person.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedPersonalProfileDocument -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedPersonalProfileDocument">
+        <rdfs:label>PersonalProfileDocument</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&renata;FOAF-modifiedDocument"/>
+        <rdfs:comment>A personal profile RDF document.</rdfs:comment>
+        <vs:term_status>testing</vs:term_status>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ime.usp.br/~renata/FOAF-modifiedProject -->
+
+    <owl:Class rdf:about="&renata;FOAF-modifiedProject">
+        <rdfs:label>Project</rdfs:label>
+        <vs:term_status>testing</vs:term_status>
+        <rdfs:comment>A project (a collective endeavour of some kind).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#Class -->
+
+    <owl:Class rdf:about="&rdfs;Class"/>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <rdf:Description rdf:about="&owl;Thing">
+        <rdfs:label>Thing</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing -->
+
+    <owl:Class rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing">
+        <rdfs:label>Spatial Thing</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#Concept -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#Concept">
+        <rdfs:label>Concept</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
