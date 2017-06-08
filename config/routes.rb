@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'search/index'
+  get 'reports/researchers', 'reports#researchers'
 
   root 'search#index'
 

@@ -1,0 +1,19 @@
+.container
+  .row
+    h1 Researchers
+    - if @result.present?
+      .row
+        table.table
+          thead
+            tr
+              th Name
+              th Name in citations
+          tbody
+            - @result.each do |r|
+              tr
+                td = r.name
+                td = r.name_in_citations
+          tfoot
+            tr
+              td
+                = paginate @result

@@ -98,6 +98,13 @@ GEM
     json-ld (2.1.0)
       multi_json (~> 1.11)
       rdf (~> 2.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
+    kaminari-mongoid (1.0.1)
+      kaminari-core (~> 1.0)
+      mongoid
     lazy_priority_queue (0.1.1)
     ld-patch (0.3.0)
       ebnf (~> 1.0, >= 1.0.1)
@@ -332,6 +339,8 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
   jquery-rails
+  kaminari-actionview
+  kaminari-mongoid
   linkeddata (~> 2.0)
   listen (~> 3.0.5)
   mongoid!
@@ -351,4 +360,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.11.2
+   1.15.1
