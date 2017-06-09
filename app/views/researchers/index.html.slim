@@ -11,7 +11,7 @@
           tbody
             - @result.each do |r|
               tr
-                td = r.name
+                td = link_to r.name, r
                 td = r.name_in_citations
           tfoot
             tr

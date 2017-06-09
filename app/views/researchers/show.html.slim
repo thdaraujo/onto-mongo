@@ -1,0 +1,36 @@
+.container
+  .row
+    h1 Researcher
+    p = @result.name
+    p = @result.name_in_citations
+    p = @result.country
+    p = @result.resume
+
+    - if @result.publications.present?
+      .row
+        table.table
+          thead
+            tr
+              th Name
+          tbody
+            - @result.publications.each do |p|
+              tr
+                td = p.nature
+                td = p.title
+                td = p.title_en
+                td = p.year
+                td = p.country
+                td = p.language
+                td = p.medium
+                td = p.doi
+                td
+                  - if p.coauthors.present?
+                    - p.coauthors.each do |c|
+                      p = @result.name
+                      p = @result.name_in_citations
+                      p = @result.country
+                      p = @result.resume
+          tfoot
+            tr
+              td
+                = link_to 'Back', researchers_path

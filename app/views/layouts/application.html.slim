@@ -4,7 +4,7 @@ html
     title Onto-Mongo
     == csrf_meta_tags
 
-    == stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' 
+    == stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     == javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
@@ -12,7 +12,7 @@ html
       .container-fluid
         /! Brand and toggle get grouped for better mobile display
         .navbar-header
-          button.navbar-toggle.collapsed aria-expanded="false" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button" 
+          button.navbar-toggle.collapsed aria-expanded="false" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
@@ -22,13 +22,13 @@ html
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
-              a href="#" 
+              a href="#"
                 | Link
                 span.sr-only (current)
             li
-              a href="#"  Link
+              = link_to 'Researchers', researchers_path
             li.dropdown
-              a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 
+              a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
                 | Dropdown
                 span.caret
               ul.dropdown-menu
@@ -38,17 +38,17 @@ html
                   a href="#"  Another action
                 li
                   a href="#"  Something else here
-                li.divider role="separator" 
+                li.divider role="separator"
                 li
                   a href="#"  Separated link
-                li.divider role="separator" 
+                li.divider role="separator"
                 li
                   a href="#"  One more separated link
           ul.nav.navbar-nav.navbar-right
             li
               a href="#"  Link
             li.dropdown
-              a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 
+              a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
                 | Dropdown
                 span.caret
               ul.dropdown-menu
@@ -58,10 +58,10 @@ html
                   a href="#"  Another action
                 li
                   a href="#"  Something else here
-                li.divider role="separator" 
+                li.divider role="separator"
                 li
                   a href="#"  Separated link
         /! /.navbar-collapse
       /! /.container-fluid
 
-    == yield 
+    == yield
