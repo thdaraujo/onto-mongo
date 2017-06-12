@@ -8,10 +8,17 @@
 
     - if @result.publications.present?
       .row
-        table.table.table-striped
+        table.table.table-striped.table-hover
           thead
             tr
-              th Name
+              th nature
+              th title
+              th title_en
+              th year
+              th country
+              th language
+              th medium
+              th doi
           tbody
             - @result.publications.each do |p|
               tr
@@ -23,11 +30,20 @@
                 td = p.language
                 td = p.medium
                 td = p.doi
-                td
-                  - if p.coauthors.present?
-                    - p.coauthors.each do |c|
-                      p = @result.name
-                      p = @result.name_in_citations
-                      p = @result.country
-                      p = link_to 'View', c
+              - if p.coauthors.present?
+                tr
+                  td colspan="8"                  
+                    table.table.table-responsive
+                      thead
+                        th name
+                        th name_in_citations
+                        th country
+                      tbody                  
+                        - p.coauthors.each do |c|
+                          tr
+                            td = c[:name]
+                            td = c[:name_in_citations]
+                            td = c[:country]  
+                            - it = Researcher.where(name_in_citations: c[:name_in_citations]).first
+                            td = link_to 'View', it                                            
     p = link_to 'Back', researchers_path
