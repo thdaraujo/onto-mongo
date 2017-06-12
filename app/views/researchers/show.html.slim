@@ -8,7 +8,7 @@
 
     - if @result.publications.present?
       .row
-        table.table
+        table.table.table-striped
           thead
             tr
               th Name
@@ -29,8 +29,5 @@
                       p = @result.name
                       p = @result.name_in_citations
                       p = @result.country
-                      p = @result.resume
-          tfoot
-            tr
-              td
-                = link_to 'Back', researchers_path
+                      p = link_to 'View', c
+    p = link_to 'Back', researchers_path

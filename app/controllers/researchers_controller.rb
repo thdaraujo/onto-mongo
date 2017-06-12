@@ -1,6 +1,6 @@
 class ResearchersController < ApplicationController
   def index
-    @result = Researcher.page params[:page]
+    @result = Researcher.order_by(name: :asc).page(params[:page])
   end
 
   def show
