@@ -74,10 +74,16 @@ puts '------------------------------------------'
 hashes.each_with_index do |hash, index|
   model = Researcher.from_hash(hash)
   begin
+    _researcher = Researcher.where(name_in_citations: model.name_in_citations).first
+    if _researcher.present?
+      model = _researcher
+    end
     model.save!
     # TODO multiple publications...
     publications = Publication.from_hash(hash)
-    model.publications.push(publications.first)
+    publications.each do |pub|
+      model.publications.push(pub)
+    end
     model.save!
   rescue => ex
     puts 'error on: #{model.name}'
@@ -97,8 +103,11 @@ Researcher.all.map(&:publications).flatten.compact.
   uniq{|coauthor| coauthor[:name] }.
   each do |coauthor|
     begin
-      puts coauthor[:name]
-      Researcher.create!(name: coauthor[:name], name_in_citations: coauthor[:name_in_citations])
+      _researcher = Researcher.where(name_in_citations: coauthor[:name_in_citations]).first
+      unless _researcher.present?
+        puts coauthor[:name]
+        Researcher.create!(name: coauthor[:name], name_in_citations: coauthor[:name_in_citations])
+      end
     rescue => ex
       puts ex.message
     end
