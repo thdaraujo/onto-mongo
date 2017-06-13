@@ -53,7 +53,7 @@ class Publication
           authors = [authors] unless authors.is_a? Array
 
           model.coauthors = authors.map{|author|
-            { name: author["NOME_COMPLETO_DO_AUTOR"], name_in_citations: author["NOME_PARA_CITACAO"] }
+            { name: author["NOME_COMPLETO_DO_AUTOR"], name_in_citations: author["NOME_PARA_CITACAO"], identification_number: author["NRO_ID_CNPQ"] }
           }
         end
         publications << model
@@ -86,7 +86,8 @@ class Publication
           model.coauthors = coauthors.map{|author|
             {
               name: author["NOME_COMPLETO_DO_AUTOR"],
-              name_in_citations: author["NOME_PARA_CITACAO"]
+              name_in_citations: author["NOME_PARA_CITACAO"],
+              identification_number: author["NRO_ID_CNPQ"]
             }
           }
         end

@@ -9,10 +9,14 @@ class Researcher
   field :name_in_citations, type: String
   field :country, type: String
   field :resume, type: String
+  field :identification_number, type: String
 
-  validates :name, :uniqueness => true
-  validates :name_in_citations, :uniqueness => true
-  index({ 'name' => 1, 'name_in_citations' => 1}, { unique: true, drop_dups: true })
+  #validates :name, :uniqueness => true
+  #validates :name_in_citations, :uniqueness => true
+  #index({ 'name' => 1, 'name_in_citations' => 1}, { unique: true, drop_dups: true })
+
+  #validates :identification_number, :uniqueness => true
+  #index({ 'identification_number' => 1}, { unique: true, sparse:true })
 
   #ontoclass 'foaf:Person'
   #maps from: 'foaf:name', to: :name
@@ -107,9 +111,10 @@ class Researcher
 
   def self.from_hash(hash)
     model = Researcher.new
-    model.name              = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["NOME_COMPLETO"]
-    model.name_in_citations = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["NOME_EM_CITACOES_BIBLIOGRAFICAS"]
-    model.country           = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["PAIS_DE_NASCIMENTO"]
+    model.identification_number = hash["CURRICULO_VITAE"]["NUMERO_IDENTIFICADOR"]
+    model.name                  = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["NOME_COMPLETO"]
+    model.name_in_citations     = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["NOME_EM_CITACOES_BIBLIOGRAFICAS"]
+    model.country               = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["PAIS_DE_NASCIMENTO"]
     if hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["RESUMO_CV"].present?
       model.resume            = hash["CURRICULO_VITAE"]["DADOS_GERAIS"]["RESUMO_CV"]["TEXTO_RESUMO_CV_RH"]
     end
