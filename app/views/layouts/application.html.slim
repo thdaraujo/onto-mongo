@@ -5,6 +5,7 @@ html
     == csrf_meta_tags
 
     == stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    == javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
     == javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
@@ -29,38 +30,10 @@ html
               = link_to 'Researchers', researchers_path
             li.dropdown
               a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-                | Dropdown
+                | Reports
                 span.caret
               ul.dropdown-menu
-                li
-                  a href="#"  Action
-                li
-                  a href="#"  Another action
-                li
-                  a href="#"  Something else here
-                li.divider role="separator"
-                li
-                  a href="#"  Separated link
-                li.divider role="separator"
-                li
-                  a href="#"  One more separated link
-          ul.nav.navbar-nav.navbar-right
-            li
-              a href="#"  Link
-            li.dropdown
-              a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
-                | Dropdown
-                span.caret
-              ul.dropdown-menu
-                li
-                  a href="#"  Action
-                li
-                  a href="#"  Another action
-                li
-                  a href="#"  Something else here
-                li.divider role="separator"
-                li
-                  a href="#"  Separated link
+                li = link_to 'Publications by Year', reports_publications_by_year_path
         /! /.navbar-collapse
       /! /.container-fluid
 

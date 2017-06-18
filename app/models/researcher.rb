@@ -121,4 +121,15 @@ class Researcher
 
     model
   end
+
+  def self.publications_by_year
+    aggr = Researcher.pluck('publications.year').
+                      compact.
+                      flatten.
+                      map{|i| {year: i["year"].to_i } }.
+                      sort_by{|i| i[:year] }.
+                      group_by{|i| i[:year]}.
+                      map{|year, v| [year.to_s, v.size] }
+    aggr
+  end
 end

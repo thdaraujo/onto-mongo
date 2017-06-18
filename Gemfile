@@ -45,6 +45,7 @@ gem 'slim-rails', '~> 3.1'
 #gem 'kaminari'
 gem 'kaminari-mongoid'
 gem 'kaminari-actionview'
+gem 'chartkick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
