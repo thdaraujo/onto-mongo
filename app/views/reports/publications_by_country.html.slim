@@ -1,0 +1,21 @@
+javascript:
+  Chartkick.configure({language: "pt"});
+
+.container
+  .row
+    h1 Publications by Country
+  .row
+    .col-lg-12
+      = geo_chart @chart, width: "1000px", height: "900px"
+  .row
+    .col-lg-12
+      table.table.table-striped
+        thead
+          tr
+            th Country
+            th Publications
+        tbody
+          - @result.each do |arr|
+            tr
+              td = arr[0]
+              td = arr[1]

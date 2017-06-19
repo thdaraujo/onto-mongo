@@ -26,14 +26,14 @@ html
               a href="#"
                 | Link
                 span.sr-only (current)
-            li
-              = link_to 'Researchers', researchers_path
+            li = link_to 'Researchers', researchers_path
             li.dropdown
               a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
                 | Reports
                 span.caret
               ul.dropdown-menu
                 li = link_to 'Publications by Year', reports_publications_by_year_path
+                li = link_to 'Publications by Country', reports_publications_by_country_path
         /! /.navbar-collapse
       /! /.container-fluid
 

@@ -1,4 +1,5 @@
 # coding: utf-8
+
 class Researcher
   include Mongoid::Document
   include OntoMap
@@ -129,7 +130,34 @@ class Researcher
                       map{|i| {year: i["year"].to_i } }.
                       sort_by{|i| i[:year] }.
                       group_by{|i| i[:year]}.
-                      map{|year, v| [year.to_s, v.size] }
+                      map{|k, v| [k.to_s, v.size] }
     aggr
+  end
+
+  def self.publications_by_country
+    aggr = Researcher.pluck('publications.country').
+                      compact.
+                      flatten.
+                      select{|i| i["country"].present? }.
+                      map{|i| {country: Researcher.country_to_code(i["country"]) } }.
+                      group_by{|i| i[:country]}.
+                      map{|k, v| [k, v.size] }
+    aggr
+  end
+
+  def self.countries
+      @countries ||= ISO3166::Country.all.
+                            map{|c| { name: c.name, name_pt: c.translations["pt"], code: c.alpha2 } }.
+                            map{|c| [c[:name_pt], c] }.to_h
+      @countries
+    end
+
+  def self.country_to_code(name_pt)
+      if countries[name_pt].present?
+        countries[name_pt][:code]
+      else
+        puts "country #{name_pt} not found."
+        nil
+      end
   end
 end
