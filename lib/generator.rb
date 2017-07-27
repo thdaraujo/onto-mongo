@@ -96,16 +96,15 @@ class Generator
           if node.nil?
             puts "Não foi possível encontrar o vértice de #{key.to_s}."
           else
-            #puts "Ontoclass: #{node.ontoclass}, symbol: #{key.to_sym}"
 
             instance = r[key]
-            predicate = OntoMap.inverted_attributes_for(node.ontoclass)[instance.first[0].to_sym]
-
-            puts "PREDICADO: #{predicate} - VALUE: #{instance.first[1]} - CLASS: #{instance.class}"
+            value = instance.first[1]
+            attribute = instance.first[0]
+            predicate = OntoMap.inverted_attributes_for(node.ontoclass)[attribute.to_sym]
 
             @data_to_insert = @data_to_insert + "<http://onto-mongo/basic-lattes/#{r["_id"]}>" \
                                               "<http://onto-mongo/basic-lattes##{predicate}>"\
-                                              " \"#{instance.first[1]}\" "
+                                              " \"#{value}\" "
             if result_index == result.count - 1
               @data_to_insert.concat(" \n")
             else

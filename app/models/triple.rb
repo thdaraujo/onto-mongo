@@ -5,7 +5,6 @@ class Triple
       @predicate = Predicate.new triple[2]
       @object = OntoObject.new triple[3]
       set_ontoclass
-      puts "setou ontoclass"
    end
 
    def json

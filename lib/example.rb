@@ -59,11 +59,14 @@ module Example
         "$unwind": {
           "artigos1"
         }
+        "$project": {
+          "name": true,
+          "article.title"=>true
+        }
+
 
 =end
   end
-
-
 
 =begin
 
