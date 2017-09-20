@@ -145,6 +145,10 @@ class Researcher
     aggr
   end
 
+  def all_coauthors
+    publications.pluck('coauthors').compact.flatten.uniq
+  end
+
   def self.countries
       @countries ||= ISO3166::Country.all.
                             map{|c| { name: c.name, name_pt: c.translations["pt"], code: c.alpha2 } }.

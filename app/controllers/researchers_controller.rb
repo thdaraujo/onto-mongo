@@ -6,4 +6,9 @@ class ResearchersController < ApplicationController
   def show
     @result = Researcher.find(id: params[:id])
   end
+
+  def coauthors
+    @researcher = Researcher.find(id: params[:id])
+    # @researcher.all_coauthors
+  end
 end

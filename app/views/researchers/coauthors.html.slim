@@ -1,0 +1,21 @@
+.container
+  .row
+    h1 Researcher Coauthors
+    p = @researcher.name
+    p = @researcher.name_in_citations
+    p = @researcher.country
+    p = @researcher.resume
+
+    - if @researcher.all_coauthors.present?
+      .row
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th name
+              th name in citations              
+          tbody
+            - @researcher.all_coauthors.each do |c|
+              tr
+                td = c[:name]
+                td = c[:name_in_citations]
+    p = link_to 'Back', researchers_path

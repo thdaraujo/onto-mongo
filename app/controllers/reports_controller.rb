@@ -11,4 +11,5 @@ class ReportsController < ApplicationController
     @result = Researcher.publications_by_country
     @chart =  @result
   end
+
 end

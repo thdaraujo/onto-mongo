@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   root 'search#index'
   get 'reports/index'
 
-  resources :researchers, only: [:index, :show]
+  resources :researchers, only: [:index, :show] do
+    member do
+      get :coauthors
+    end
+  end
+
   get 'reports/publications_by_year'
   get 'reports/publications_by_country'
 
